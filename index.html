@@ -28,6 +28,45 @@
       <p class="hint">No pressure. Just get it out of your head.</p>
     </section>
 
+    <!-- Vibe check (hidden until a task is added) -->
+    <section class="card" id="vibeCard" hidden>
+      <h2>Quick vibe check</h2>
+      <p class="hint">Give me the vibe, I’ll do the sorting.</p>
+
+      <div class="vibeGroup">
+        <h3>Relief level</h3>
+        <div class="vibeRow" data-field="impact">
+          <button type="button" data-value="big">Big</button>
+          <button type="button" data-value="medium">Medium</button>
+          <button type="button" data-value="small">Small</button>
+        </div>
+      </div>
+
+      <div class="vibeGroup">
+        <h3>Time needed</h3>
+        <div class="vibeRow" data-field="minutes">
+          <button type="button" data-value="5">5m</button>
+          <button type="button" data-value="15">15m</button>
+          <button type="button" data-value="30">30m</button>
+          <button type="button" data-value="60">60m+</button>
+        </div>
+      </div>
+
+      <div class="vibeGroup">
+        <h3>Time-sensitive?</h3>
+        <div class="vibeRow" data-field="pressure">
+          <button type="button" data-value="soon">Soon</button>
+          <button type="button" data-value="later">Later</button>
+          <button type="button" data-value="none">Not really</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <button type="button" id="vibeSaveBtn">Save vibe</button>
+        <button type="button" class="secondary" id="vibeSkipBtn">Skip</button>
+      </div>
+    </section>
+
        <!-- Tasks list -->
     <section class="card">
       <h2>Your list</h2>

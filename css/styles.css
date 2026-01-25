@@ -61,6 +61,36 @@ button.secondary {
   color: #e9eef7;
 }
 
+/* ----- VIBE BUTTON STYLES ----- */
+
+.vibeRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.vibeRow button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Hover = gentle encouragement */
+.vibeRow button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Selected = calm confidence */
+.vibeRow button.selected {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+
 .hint {
   margin: 10px 0 0;
   opacity: 0.75;

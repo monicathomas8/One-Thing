@@ -23,18 +23,18 @@ const affirmations = [
 // =======================2) DOM ELEMENTS (REFERENCES) =======================
 // The <form> that wraps the task input and Add button
 const taskForm = document.getElementById("taskForm");
-
 // The <input> where the user types a new task
 const taskInput = document.getElementById("taskInput");
-
 // The <ul> that will contain the list of tasks
 const taskList = document.getElementById("taskList");
-
 // The element where the daily affirmation appears
 const affirmationTextEl = document.getElementById("affirmationText");
-
 // The hint that shows when there are no tasks
 const doneHint = document.getElementById("doneHint");
+// VIBE CARD ELEMENTS
+const vibeCard = document.getElementById("vibeCard");
+const vibeSaveBtn = document.getElementById("vibeSaveBtn");
+const vibeSkipBtn = document.getElementById("vibeSkipBtn");
 
 
 
@@ -45,6 +45,14 @@ const doneHint = document.getElementById("doneHint");
 */
 let tasks = [];
 
+// Which task are we currently setting vibes for?
+let vibeTaskIndex = null;
+// Temporary vibe values while the user taps buttons
+let selectedVibe = {
+  impact: "medium",
+  minutes: 15,
+  pressure: "later"
+};
 
 // ======================= 4) STORAGE HELPERS (LOCAL STORAGE) =======================
 /*
@@ -127,6 +135,64 @@ function renderTasks() {
   });
 }
 
+
+function openVibePanel(forTaskIndex) {
+
+  vibeTaskIndex = forTaskIndex;
+        /*
+        Show the vibe panel for a specific task (usually the newest one)
+        We also reset the selection UI so it feels clean and obvious.
+        */
+  const t = tasks[vibeTaskIndex];
+     // Start from the task's current values (defaults or previously set)
+  selectedVibe = {
+    impact: t.impact,
+    minutes: t.minutes,
+    pressure: t.pressure
+  };
+
+  // Update button "selected" states to match selectedVibe
+  syncVibeButtonUI();
+
+  // Show the panel
+  vibeCard.hidden = false;
+}
+
+
+function closeVibePanel() {
+    /*
+  Hide the vibe panel and clear the current selection target
+*/
+  vibeCard.hidden = true;
+  vibeTaskIndex = null;
+}
+
+
+function syncVibeButtonUI() {
+    /*
+    Adds/removes a "selected" class on vibe buttons so the user
+    can SEE what they've picked (super important for UX).
+    */
+  const rows = vibeCard.querySelectorAll(".vibeRow");
+
+  rows.forEach(function (row) {
+    const field = row.dataset.field; // "impact" | "minutes" | "pressure"
+    const buttons = row.querySelectorAll("button");
+
+    buttons.forEach(function (btn) {
+      const value = btn.dataset.value;
+
+      // Compare as strings (minutes are stored as numbers)
+      const selectedValue =
+        field === "minutes" ? String(selectedVibe.minutes) : String(selectedVibe[field]);
+
+      btn.classList.toggle("selected", value === selectedValue);
+    });
+  });
+}
+
+
+
 // ======================= 6) EVENT HANDLERS =======================
 
 function handleTaskSubmit(event) {
@@ -134,27 +200,34 @@ function handleTaskSubmit(event) {
   event.preventDefault();
     // Prevent the form from reloading the page
 
-  // Get the text the user typed (trim removes extra spaces)
   const text = taskInput.value.trim();
+    // Get the text the user typed (trim removes extra spaces)
 
-  // Prevent blank tasks being added
-  if (!text) return;
+  if (!text) return; // Prevent blank tasks being added
 
-  // Create a task object (we’ll expand this later with vibe fields)
+  
   const task = {
+        // Create a task object with default fields
     text: text,
     done: false,
+
+     // Vibe defaults (user can change these later)
+  impact: "medium",   // "big" | "medium" | "small"
+  minutes: 15,        // 5 | 15 | 30 | 60
+  pressure: "later"   // "soon" | "later" | "none"
   };
 
-  // Update state
-  tasks.push(task);
+
+  tasks.push(task); // Update state
+    const newIndex = tasks.length - 1;
+    openVibePanel(newIndex); // Open vibe panel for the new task
+
 
   // Persist + update UI
   saveTasks();
   renderTasks();
 
-  // Reset input for nicer UX
-  taskInput.value = "";
+  taskInput.value = ""; // Reset input for nicer UX
 }
 
 
@@ -187,3 +260,45 @@ taskForm.addEventListener("submit", handleTaskSubmit);
 loadTasks();
 setDailyAffirmation();
 renderTasks();
+
+// When a vibe button is clicked, update selectedVibe and refresh UI.
+// We use ONE listener on the card (event delegation) instead of 9 separate listeners.
+vibeCard.addEventListener("click", function (event) {
+  const btn = event.target.closest("button");
+  if (!btn) return;
+
+  // Ignore Save/Skip buttons here (they have their own listeners)
+  if (btn.id === "vibeSaveBtn" || btn.id === "vibeSkipBtn") return;
+
+  const row = btn.closest(".vibeRow");
+  if (!row) return;
+
+  const field = row.dataset.field;
+  const value = btn.dataset.value;
+
+  if (field === "minutes") {
+    selectedVibe.minutes = Number(value);
+  } else {
+    selectedVibe[field] = value;
+  }
+
+  syncVibeButtonUI();
+});
+
+// Save vibe into the correct task, persist, re-render, close panel
+vibeSaveBtn.addEventListener("click", function () {
+  if (vibeTaskIndex === null) return;
+
+  tasks[vibeTaskIndex].impact = selectedVibe.impact;
+  tasks[vibeTaskIndex].minutes = selectedVibe.minutes;
+  tasks[vibeTaskIndex].pressure = selectedVibe.pressure;
+
+  saveTasks();
+  renderTasks();
+  closeVibePanel();
+});
+
+// Skip just closes the panel (no guilt, no friction)
+vibeSkipBtn.addEventListener("click", function () {
+  closeVibePanel();
+});
