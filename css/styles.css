@@ -57,6 +57,10 @@ h1 {
   margin: 0 auto;
 }
 
+.card .row {
+  justify-content: center;
+}
+
 /* =========================
    FORMS
 ========================= */
@@ -168,6 +172,7 @@ button.secondary:hover {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 8px;
+  text-align: left;
 }
 
 .list li:hover {
@@ -204,6 +209,11 @@ button.secondary:hover {
   padding: 18px;
   overflow: hidden;
   background: #171a21;
+  justify-content: center;
+}
+
+.overlayCard .row{
+  justify-content: center;
 }
 
 /* Overlay images */
@@ -231,6 +241,58 @@ button.secondary:hover {
 }
 
 /* =========================
+   BREATHE CIRCLE
+========================= */
+.breatheCircle {
+  width: 180px;
+  height: 180px;
+  margin: 18px auto;
+  border-radius: 50%;
+
+  /* soft “glow” */
+  background: rgba(233, 238, 247, 0.08);
+  border: 1px solid rgba(233, 238, 247, 0.20);
+  box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.18);
+
+  /* default: paused until Start is pressed */
+  animation: breathePulse 6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+/* When breathing is active, we’ll add a class to start animation */
+.breatheCircle.isBreathing {
+  animation-play-state: running;
+}
+
+@keyframes breathePulse {
+  /* Inhale */
+  0% {
+    transform: scale(0.88);
+    box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.12);
+  }
+
+  /* Fully in */
+  40% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 18px rgba(233, 238, 247, 0.08);
+  }
+
+  /* Exhale */
+  100% {
+    transform: scale(0.88);
+    box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.12);
+  }
+}
+
+/* Respect reduced motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .breatheCircle,
+  .breatheCircle.isBreathing {
+    animation: none;
+  }
+}
+
+/* =========================
    TEXT
 ========================= */
 .focusText {
@@ -243,6 +305,16 @@ button.secondary:hover {
   margin: 8px 0 14px;
 }
 
+/* Centre top-level app text */
+.header,
+.card {
+  text-align: center;
+}
+
+input,
+textarea {
+  text-align: left;
+}
 /* =========================
    MOBILE RESPONSIVE
 ========================= */
