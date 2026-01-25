@@ -1,19 +1,32 @@
+/* =========================
+   BASE / RESET
+========================= */
 * { box-sizing: border-box; }
 
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: #0f1115;
   color: #e9eef7;
 }
 
+/* =========================
+   LAYOUT
+========================= */
 .header {
   padding: 24px 16px 8px;
   text-align: center;
 }
 
-h1 { margin: 0 0 6px; font-size: 32px; }
-.subtext { margin: 0; opacity: 0.85; }
+h1 {
+  margin: 0 0 6px;
+  font-size: 32px;
+}
+
+.subtext {
+  margin: 0;
+  opacity: 0.85;
+}
 
 .container {
   max-width: 720px;
@@ -25,7 +38,7 @@ h1 { margin: 0 0 6px; font-size: 32px; }
 
 .card {
   background: #171a21;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 16px;
 }
@@ -36,15 +49,29 @@ h1 { margin: 0 0 6px; font-size: 32px; }
   margin-top: 10px;
 }
 
-input {
-  flex: 1;
-  padding: 12px 12px;
+/* =========================
+   FORMS
+========================= */
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: #0f1115;
   color: #e9eef7;
 }
 
+input { flex: 1; }
+
+textarea {
+  resize: vertical;
+  margin-top: 6px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 button {
   padding: 12px 14px;
   border-radius: 12px;
@@ -53,16 +80,34 @@ button {
   background: #e9eef7;
   color: #0f1115;
   font-weight: 600;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.05s ease;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+button:active {
+  transform: scale(0.97);
 }
 
 button.secondary {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #e9eef7;
 }
 
-/* ----- VIBE BUTTON STYLES ----- */
+button.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
 
+/* =========================
+   VIBE PANEL
+========================= */
 .vibeRow {
   display: flex;
   gap: 8px;
@@ -79,23 +124,32 @@ button.secondary {
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Hover = gentle encouragement */
 .vibeRow button:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Selected = calm confidence */
 .vibeRow button.selected {
-  background: rgba(255, 255, 255, 0.18);
+  background-color: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.6);
 }
 
+/* =========================
+   TEXT / HINTS
+========================= */
 .hint {
   margin: 10px 0 0;
   opacity: 0.75;
   font-size: 14px;
 }
 
+.focusText {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* =========================
+   TASK LIST
+========================= */
 .list {
   list-style: none;
   padding: 0;
@@ -107,36 +161,36 @@ button.secondary {
   user-select: none;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   margin-bottom: 8px;
 }
 
 .list li:hover {
-  background: rgba(255,255,255,0.06);
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
-.focusText {
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-/* Done tasks look softer and slightly crossed out */
 .done {
   opacity: 0.55;
   text-decoration: line-through;
 }
 
-/* ----- FOCUS MODE OVERLAY ----- */
-
+/* =========================
+   FOCUS MODE OVERLAY
+========================= */
 .overlay {
   position: fixed;
-  inset: 0; /* top/right/bottom/left: 0 */
+  inset: 0;
   background: rgba(0, 0, 0, 0.6);
   display: grid;
   place-items: center;
   padding: 16px;
   z-index: 1000;
+}
+
+/* Ensure hidden always wins */
+.overlay[hidden] {
+  display: none !important;
 }
 
 .overlayCard {
@@ -152,20 +206,4 @@ button.secondary {
 .focusTaskText {
   font-size: 20px;
   margin: 8px 0 14px;
-}
-
-textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #0f1115;
-  color: #e9eef7;
-  resize: vertical;
-  margin-top: 6px;
-}
-
-/* Ensure the hidden attribute always wins */
-.overlay[hidden] {
-  display: none !important;
 }

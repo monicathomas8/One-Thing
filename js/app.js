@@ -65,7 +65,6 @@ let selectedVibe = {
 
 let currentFocusIndex = null;
 
-
 // ======================= 4) STORAGE HELPERS (LOCAL STORAGE) =======================
 /*
   LocalStorage can only store strings, so we use JSON to save/restore our tasks array.
@@ -113,6 +112,27 @@ function renderTasks() {
     const li = document.createElement("li");
 
     li.textContent = task.text; // Show the task text
+    // Add a small second line for progress + notes preview
+    const meta = document.createElement("div");
+    meta.style.opacity = "0.75";
+    meta.style.fontSize = "13px";
+    meta.style.marginTop = "6px";
+
+    const progressBits = [];
+
+    if (typeof task.minutesDone === "number" && task.minutesDone > 0) {
+      progressBits.push(`${task.minutesDone} mins done`);
+    }
+
+    if (typeof task.notes === "string" && task.notes.trim().length > 0) {
+      const preview = task.notes.trim().slice(0, 60);
+      progressBits.push(
+        `Notes: ${preview}${task.notes.trim().length > 60 ? "…" : ""}`,
+      );
+    }
+
+    meta.textContent = progressBits.length ? progressBits.join(" • ") : "";
+    li.appendChild(meta);
 
     li.addEventListener("click", function () {
       // Clicking the task text toggles done/undone
@@ -305,7 +325,7 @@ function scoreTask(task) {
 }
 
 function pickOneThingIndex() {
-    /*
+  /*
   Pick a task index using:
   - only tasks that are not done
   - scoreTask() to rank them
@@ -350,6 +370,43 @@ function handlePickOneThing() {
 
   // Open Focus Mode overlay
   openFocusOverlay(chosenIndex);
+}
+
+function handleFocusStart() {
+  /*
+    Mark the current focus task as "started".
+    We store a timestamp so you could later show "started 10 mins ago" etc.
+    */
+  if (currentFocusIndex === null) return;
+
+  const task = tasks[currentFocusIndex];
+
+  // Store a start timestamp (ISO string = easy to save in LocalStorage)
+  task.startedAt = new Date().toISOString();
+
+  saveTasks();
+  renderTasks();
+}
+
+function handleFocusFiveMinutes() {
+  /*
+    Add 5 minutes of progress to the current focus task.
+    This is gentle progress tracking without pressure.
+    */
+
+  if (currentFocusIndex === null) return;
+
+  const task = tasks[currentFocusIndex];
+
+  // If minutesDone doesn't exist yet, start from 0
+  if (typeof task.minutesDone !== "number") {
+    task.minutesDone = 0;
+  }
+
+  task.minutesDone += 5;
+
+  saveTasks();
+  renderTasks();
 }
 
 // ======================= 7) INIT / BOOTSTRAP =======================
@@ -412,7 +469,12 @@ focusNotes.addEventListener("input", function () {
 
   tasks[currentFocusIndex].notes = focusNotes.value;
   saveTasks();
+  renderTasks(); // update the task list preview immediately
 });
 
 // Pick button should already be wired, but if not:
 pickBtn.addEventListener("click", handlePickOneThing);
+
+// Focus action buttons
+focusStartBtn.addEventListener("click", handleFocusStart);
+focusFiveBtn.addEventListener("click", handleFocusFiveMinutes);
