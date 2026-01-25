@@ -46,6 +46,13 @@ const focusDoneBtn = document.getElementById("focusDoneBtn");
 const focusStartBtn = document.getElementById("focusStartBtn");
 const focusFiveBtn = document.getElementById("focusFiveBtn");
 const focusBreatheBtn = document.getElementById("focusBreatheBtn");
+// BREATHE OVERLAY ELEMENTS
+const breatheOverlay = document.getElementById("breatheOverlay");
+const breatheStartBtn = document.getElementById("breatheStartBtn");
+const breatheCloseBtn = document.getElementById("breatheCloseBtn");
+const pageBreatheBtn = document.getElementById("pageBreatheBtn");
+
+
 
 // ======================= 3) STATE (APP DATA) =======================
 /*
@@ -429,6 +436,31 @@ function handleFocusDone() {
   closeFocusOverlay();
 }
 
+function handleFocusBreathe() {
+    /*
+    Show a simple breathing prompt in the overlay.
+    */
+  focusOverlayTask.textContent = "Let’s breathe together.";
+
+  focusNotes.value =
+    "Inhale for 4…\nHold for 4…\nExhale for 6…\n\nJust a few rounds. You’re safe.";
+
+  focusNotes.blur(); // removes cursor = less “work” feeling
+}
+
+function openBreatheOverlay() {
+  /*
+    Show the breathe overlay.
+    */
+  breatheOverlay.hidden = false;
+}
+
+function closeBreatheOverlay() {
+  /*
+    Hide the breathe overlay.
+    */
+  breatheOverlay.hidden = true;
+}
 
 // ======================= 7) INIT / BOOTSTRAP =======================
 // Connect events
@@ -500,3 +532,9 @@ pickBtn.addEventListener("click", handlePickOneThing);
 focusStartBtn.addEventListener("click", handleFocusStart);
 focusFiveBtn.addEventListener("click", handleFocusFiveMinutes);
 focusDoneBtn.addEventListener("click", handleFocusDone);
+// Bottom-page breathe button
+focusBreatheBtn.addEventListener("click", openBreatheOverlay);
+// Breathe overlay buttons
+breatheCloseBtn.addEventListener("click", closeBreatheOverlay);
+pageBreatheBtn.addEventListener("click", openBreatheOverlay);
+

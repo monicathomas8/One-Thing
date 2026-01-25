@@ -6,7 +6,11 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: #0f1115;
+    background: linear-gradient(
+    180deg,
+    #2a2f3a 0%,
+    #1f2430 100%
+  );
   color: #e9eef7;
 }
 
