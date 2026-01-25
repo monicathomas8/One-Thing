@@ -98,63 +98,73 @@ function setDailyAffirmation() {
 }
 
 function renderTasks() {
-  /*
-    UI RENDERING This function redraws the task list based on the tasks array
-    */
-  doneHint.hidden = tasks.length === 0;
   // Show the "click to mark done" hint only if there are tasks
+  doneHint.hidden = tasks.length === 0;
 
-  taskList.innerHTML = "";
   // Clear the list first so we don't duplicate items
+  taskList.innerHTML = "";
 
   tasks.forEach(function (task, index) {
-    // Loop through each task object in the tasks array
     const li = document.createElement("li");
 
-    li.textContent = task.text; // Show the task text
-    // Add a small second line for progress + notes preview
+    // --- Task title text ---
+    const title = document.createElement("div");
+    title.textContent = task.text;
+    li.appendChild(title);
+
+    // --- Meta line (progress + notes preview) ---
     const meta = document.createElement("div");
     meta.style.opacity = "0.75";
     meta.style.fontSize = "13px";
     meta.style.marginTop = "6px";
 
-    const progressBits = [];
+    const bits = [];
+    if (task.startedAt) {
+      bits.push("Started");
+    }
 
     if (typeof task.minutesDone === "number" && task.minutesDone > 0) {
-      progressBits.push(`${task.minutesDone} mins done`);
+      bits.push(`${task.minutesDone} mins done`);
     }
-
     if (typeof task.notes === "string" && task.notes.trim().length > 0) {
       const preview = task.notes.trim().slice(0, 60);
-      progressBits.push(
-        `Notes: ${preview}${task.notes.trim().length > 60 ? "…" : ""}`,
-      );
+      bits.push(`Notes: ${preview}${task.notes.trim().length > 60 ? "…" : ""}`);
     }
 
-    meta.textContent = progressBits.length ? progressBits.join(" • ") : "";
+    meta.textContent = bits.length ? bits.join(" • ") : "";
     li.appendChild(meta);
 
-    li.addEventListener("click", function () {
-      // Clicking the task text toggles done/undone
+    // --- Action buttons row ---
+    const actions = document.createElement("div");
+    actions.style.marginTop = "10px";
+    actions.style.display = "flex";
+    actions.style.gap = "10px";
+
+    // ✅ Done toggle button
+    const doneBtn = document.createElement("button");
+    doneBtn.textContent = task.done ? "✅ Done" : "☐ Mark done";
+    doneBtn.classList.add("secondary");
+
+    doneBtn.addEventListener("click", function (event) {
+      event.stopPropagation();
       toggleTaskDone(index);
     });
 
-    // Create a delete button
+    // 🗑️ Delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑️ Delete it?";
-    deleteBtn.style.marginLeft = "10px";
-    deleteBtn.style.background = "transparent";
-    deleteBtn.style.color = "inherit";
-    deleteBtn.style.border = "none";
-    deleteBtn.style.cursor = "pointer";
+    deleteBtn.classList.add("secondary");
 
     deleteBtn.addEventListener("click", function (event) {
-      event.stopPropagation(); // Prevent the li click event from firing
+      event.stopPropagation();
       deleteTask(index);
     });
 
-    li.appendChild(deleteBtn);
-    // If the task is done, style it differently (later)
+    actions.appendChild(doneBtn);
+    actions.appendChild(deleteBtn);
+    li.appendChild(actions);
+
+    // Done styling
     if (task.done) {
       li.classList.add("done");
     }
@@ -409,6 +419,17 @@ function handleFocusFiveMinutes() {
   renderTasks();
 }
 
+function handleFocusDone() {
+  if (currentFocusIndex === null) return;
+
+  tasks[currentFocusIndex].done = true;
+
+  saveTasks();
+  renderTasks();
+  closeFocusOverlay();
+}
+
+
 // ======================= 7) INIT / BOOTSTRAP =======================
 // Connect events
 taskForm.addEventListener("submit", handleTaskSubmit);
@@ -478,3 +499,4 @@ pickBtn.addEventListener("click", handlePickOneThing);
 // Focus action buttons
 focusStartBtn.addEventListener("click", handleFocusStart);
 focusFiveBtn.addEventListener("click", handleFocusFiveMinutes);
+focusDoneBtn.addEventListener("click", handleFocusDone);
