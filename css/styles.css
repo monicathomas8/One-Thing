@@ -90,7 +90,6 @@ button.secondary {
   border-color: rgba(255, 255, 255, 0.6);
 }
 
-
 .hint {
   margin: 10px 0 0;
   opacity: 0.75;
@@ -126,4 +125,47 @@ button.secondary {
 .done {
   opacity: 0.55;
   text-decoration: line-through;
+}
+
+/* ----- FOCUS MODE OVERLAY ----- */
+
+.overlay {
+  position: fixed;
+  inset: 0; /* top/right/bottom/left: 0 */
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+.overlayCard {
+  width: 100%;
+  max-width: 640px;
+  background: #171a21;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.focusTaskText {
+  font-size: 20px;
+  margin: 8px 0 14px;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0f1115;
+  color: #e9eef7;
+  resize: vertical;
+  margin-top: 6px;
+}
+
+/* Ensure the hidden attribute always wins */
+.overlay[hidden] {
+  display: none !important;
 }

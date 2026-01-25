@@ -19,7 +19,6 @@ const affirmations = [
   "You don’t need to do it all - just something.",
 ];
 
-
 // =======================2) DOM ELEMENTS (REFERENCES) =======================
 // The <form> that wraps the task input and Add button
 const taskForm = document.getElementById("taskForm");
@@ -35,8 +34,18 @@ const doneHint = document.getElementById("doneHint");
 const vibeCard = document.getElementById("vibeCard");
 const vibeSaveBtn = document.getElementById("vibeSaveBtn");
 const vibeSkipBtn = document.getElementById("vibeSkipBtn");
-
-
+// Focus card elements (Pick my One Thing)
+const pickBtn = document.getElementById("pickBtn");
+const focusTextEl = document.getElementById("focusText");
+// FOCUS OVERLAY ELEMENTS
+const focusOverlay = document.getElementById("focusOverlay");
+const focusOverlayTask = document.getElementById("focusOverlayTask");
+const focusNotes = document.getElementById("focusNotes");
+const focusCloseBtn = document.getElementById("focusCloseBtn");
+const focusDoneBtn = document.getElementById("focusDoneBtn");
+const focusStartBtn = document.getElementById("focusStartBtn");
+const focusFiveBtn = document.getElementById("focusFiveBtn");
+const focusBreatheBtn = document.getElementById("focusBreatheBtn");
 
 // ======================= 3) STATE (APP DATA) =======================
 /*
@@ -51,8 +60,11 @@ let vibeTaskIndex = null;
 let selectedVibe = {
   impact: "medium",
   minutes: 15,
-  pressure: "later"
+  pressure: "later",
 };
+
+let currentFocusIndex = null;
+
 
 // ======================= 4) STORAGE HELPERS (LOCAL STORAGE) =======================
 /*
@@ -72,11 +84,10 @@ function loadTasks() {
   tasks = JSON.parse(saved);
 }
 
-
 // ======================= 5) CORE LOGIC (UI + APP BEHAVIOUR) =======================
 
 function setDailyAffirmation() {
-    /*
+  /*
     DAILY AFFIRMATION LOGIC
     - Get today's day-of-month (1–31)
     - Turn that into a safe index within the affirmations array
@@ -87,28 +98,26 @@ function setDailyAffirmation() {
   affirmationTextEl.textContent = affirmations[affirmationIndex];
 }
 
-
 function renderTasks() {
-    /*
+  /*
     UI RENDERING This function redraws the task list based on the tasks array
     */
   doneHint.hidden = tasks.length === 0;
-    // Show the "click to mark done" hint only if there are tasks
+  // Show the "click to mark done" hint only if there are tasks
 
   taskList.innerHTML = "";
-    // Clear the list first so we don't duplicate items
+  // Clear the list first so we don't duplicate items
 
   tasks.forEach(function (task, index) {
     // Loop through each task object in the tasks array
     const li = document.createElement("li");
 
-    li.textContent = task.text;  // Show the task text
-   
-    li.addEventListener("click", function () {
-        // Clicking the task text toggles done/undone
-    toggleTaskDone(index);
-    });
+    li.textContent = task.text; // Show the task text
 
+    li.addEventListener("click", function () {
+      // Clicking the task text toggles done/undone
+      toggleTaskDone(index);
+    });
 
     // Create a delete button
     const deleteBtn = document.createElement("button");
@@ -120,35 +129,32 @@ function renderTasks() {
     deleteBtn.style.cursor = "pointer";
 
     deleteBtn.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent the li click event from firing
-        deleteTask(index);
+      event.stopPropagation(); // Prevent the li click event from firing
+      deleteTask(index);
     });
 
     li.appendChild(deleteBtn);
     // If the task is done, style it differently (later)
     if (task.done) {
-    li.classList.add("done");
+      li.classList.add("done");
     }
-
 
     taskList.appendChild(li);
   });
 }
 
-
 function openVibePanel(forTaskIndex) {
-
   vibeTaskIndex = forTaskIndex;
-        /*
+  /*
         Show the vibe panel for a specific task (usually the newest one)
         We also reset the selection UI so it feels clean and obvious.
         */
   const t = tasks[vibeTaskIndex];
-     // Start from the task's current values (defaults or previously set)
+  // Start from the task's current values (defaults or previously set)
   selectedVibe = {
     impact: t.impact,
     minutes: t.minutes,
-    pressure: t.pressure
+    pressure: t.pressure,
   };
 
   // Update button "selected" states to match selectedVibe
@@ -158,18 +164,16 @@ function openVibePanel(forTaskIndex) {
   vibeCard.hidden = false;
 }
 
-
 function closeVibePanel() {
-    /*
+  /*
   Hide the vibe panel and clear the current selection target
 */
   vibeCard.hidden = true;
   vibeTaskIndex = null;
 }
 
-
 function syncVibeButtonUI() {
-    /*
+  /*
     Adds/removes a "selected" class on vibe buttons so the user
     can SEE what they've picked (super important for UX).
     */
@@ -184,44 +188,69 @@ function syncVibeButtonUI() {
 
       // Compare as strings (minutes are stored as numbers)
       const selectedValue =
-        field === "minutes" ? String(selectedVibe.minutes) : String(selectedVibe[field]);
+        field === "minutes"
+          ? String(selectedVibe.minutes)
+          : String(selectedVibe[field]);
 
       btn.classList.toggle("selected", value === selectedValue);
     });
   });
 }
 
+function openFocusOverlay(taskIndex) {
+  /*
+  Open Focus Mode for a specific task index.
+  Shows the overlay + loads notes for that task.
+*/
+  currentFocusIndex = taskIndex;
 
+  const task = tasks[taskIndex];
+  focusOverlayTask.textContent = task.text;
+
+  // Ensure notes exists (older tasks might not have it yet)
+  if (typeof task.notes !== "string") {
+    task.notes = "";
+  }
+
+  focusNotes.value = task.notes;
+
+  focusOverlay.hidden = false;
+  focusNotes.focus();
+}
+
+function closeFocusOverlay() {
+  /*
+    Close Focus Mode overlay.
+    */
+  focusOverlay.hidden = true;
+}
 
 // ======================= 6) EVENT HANDLERS =======================
 
 function handleTaskSubmit(event) {
-    // Handle the form submission to add a new task
+  // Handle the form submission to add a new task
   event.preventDefault();
-    // Prevent the form from reloading the page
+  // Prevent the form from reloading the page
 
   const text = taskInput.value.trim();
-    // Get the text the user typed (trim removes extra spaces)
+  // Get the text the user typed (trim removes extra spaces)
 
   if (!text) return; // Prevent blank tasks being added
 
-  
   const task = {
-        // Create a task object with default fields
+    // Create a task object with default fields
     text: text,
     done: false,
-
-     // Vibe defaults (user can change these later)
-  impact: "medium",   // "big" | "medium" | "small"
-  minutes: 15,        // 5 | 15 | 30 | 60
-  pressure: "later"   // "soon" | "later" | "none"
+    notes: "",
+    // Vibe defaults (user can change these later)
+    impact: "medium", // "big" | "medium" | "small"
+    minutes: 15, // 5 | 15 | 30 | 60
+    pressure: "later", // "soon" | "later" | "none"
   };
 
-
   tasks.push(task); // Update state
-    const newIndex = tasks.length - 1;
-    openVibePanel(newIndex); // Open vibe panel for the new task
-
+  const newIndex = tasks.length - 1;
+  openVibePanel(newIndex); // Open vibe panel for the new task
 
   // Persist + update UI
   saveTasks();
@@ -230,27 +259,98 @@ function handleTaskSubmit(event) {
   taskInput.value = ""; // Reset input for nicer UX
 }
 
-
 function deleteTask(index) {
-    //Delete a task by its index in the tasks array
+  //Delete a task by its index in the tasks array
   tasks.splice(index, 1);
   saveTasks();
   renderTasks();
 }
 
-
-
 function toggleTaskDone(index) {
-    /*
+  /*
     Toggle a task between done / not done
     */
-  
+
   tasks[index].done = !tasks[index].done;
   // Flip the boolean value (true becomes false, false becomes true)
   saveTasks();
   renderTasks();
 }
 
+function scoreTask(task) {
+  /*
+    Calculate a focus score for a task based on its vibe.
+    Higher score = better candidate for "One Thing".
+    */
+  const impactScore = {
+    big: 5,
+    medium: 3,
+    small: 1,
+  }[task.impact];
+
+  const pressureScore = {
+    soon: 4,
+    later: 2,
+    none: 0,
+  }[task.pressure];
+
+  const timeScore = {
+    5: 4,
+    15: 3,
+    30: 2,
+    60: 0,
+  }[task.minutes];
+
+  return impactScore + pressureScore + timeScore;
+}
+
+function pickOneThingIndex() {
+    /*
+  Pick a task index using:
+  - only tasks that are not done
+  - scoreTask() to rank them
+  - gentle randomness: choose from the top 3
+*/
+  const candidates = tasks
+    .map(function (task, index) {
+      return { task, index, score: scoreTask(task) };
+    })
+    .filter(function (item) {
+      return item.task.done === false;
+    })
+    .sort(function (a, b) {
+      return b.score - a.score; // high score first
+    });
+
+  if (candidates.length === 0) return null;
+
+  const topCount = Math.min(3, candidates.length);
+  const topChoices = candidates.slice(0, topCount);
+
+  const chosen = topChoices[Math.floor(Math.random() * topChoices.length)];
+  return chosen.index;
+}
+
+function handlePickOneThing() {
+  /*
+    When the user clicks "Pick my One Thing",
+    choose a task and open Focus Mode.
+    */
+  const chosenIndex = pickOneThingIndex();
+
+  if (chosenIndex === null) {
+    currentFocusIndex = null;
+    focusTextEl.textContent = "Nothing left to pick. Ok… that’s a win. 💛";
+    return;
+  }
+
+  // Show it in the card as reassurance
+  const chosenTask = tasks[chosenIndex];
+  focusTextEl.textContent = `Ok, we’ve got this. Your One Thing is: ${chosenTask.text}`;
+
+  // Open Focus Mode overlay
+  openFocusOverlay(chosenIndex);
+}
 
 // ======================= 7) INIT / BOOTSTRAP =======================
 // Connect events
@@ -302,3 +402,17 @@ vibeSaveBtn.addEventListener("click", function () {
 vibeSkipBtn.addEventListener("click", function () {
   closeVibePanel();
 });
+
+// Close button
+focusCloseBtn.addEventListener("click", closeFocusOverlay);
+
+// Save notes as the user types (gentle + automatic)
+focusNotes.addEventListener("input", function () {
+  if (currentFocusIndex === null) return;
+
+  tasks[currentFocusIndex].notes = focusNotes.value;
+  saveTasks();
+});
+
+// Pick button should already be wired, but if not:
+pickBtn.addEventListener("click", handlePickOneThing);
