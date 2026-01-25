@@ -1,5 +1,5 @@
-// ----- DAILY AFFIRMATION -----
-/* We keep a list of affirmations, then pick one based on today's date.
+/* ----- DAILY AFFIRMATION -----
+ We keep a list of affirmations, then pick one based on today's date.
  Result: it stays the same all day, and changes automatically tomorrow.
 */
 const affirmations = [
@@ -18,29 +18,49 @@ const affirmations = [
   "You don’t need to do it all - just something.",
 ];
 
-// Get today's day-of-month (1–31)
+/*------- DAILY AFFIRMATION LOGIC -----
+Get today's day-of-month (1–31)
+Turn that into a safe index within the affirmations array (0 → last index)
+Set the text on the page 
+*/
 const today = new Date().getDate();
-// Turn that into a safe index within the affirmations array (0 → last index)
 const affirmationIndex = today % affirmations.length;
-// Set the text on the page
 document.getElementById("affirmationText").textContent =
   affirmations[affirmationIndex];
 
 // ----- TASK FORM ELEMENTS -----
-// The <form> that wraps the task input and Add button
-const taskForm = document.getElementById("taskForm");
-// The <input> where the user types a new task
-const taskInput = document.getElementById("taskInput");
-// The <ul> that will contain the list of tasks
-const taskList = document.getElementById("taskList");
+const taskForm = document.getElementById("taskForm"); // The <form> that wraps the task input and Add button
+const taskInput = document.getElementById("taskInput"); // The <input> where the user types a new task
+const taskList = document.getElementById("taskList"); // The <ul> that will contain the list of tasks
 
-// ----- TASK DATA -----
-// This array will hold all task objects in memory
+/* ----- TASK DATA -----
+ This array will hold all task objects in memory
+*/
 let tasks = [];
 
-// ----- EVENT LISTENERS -----
-// Get the text the user typed into the input
-taskForm.addEventListener("submit", function (event) {
+/* ----- LOCAL STORAGE -----
+ LocalStorage can only store strings, so we use JSON to save/restore our tasks array. */
+function saveTasks() {
+  localStorage.setItem("oneThingTasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+  const saved = localStorage.getItem("oneThingTasks");
+
+  // If there's nothing saved yet, do nothing
+  if (!saved) return;
+
+  // Turn the saved JSON string back into an array of task objects
+  tasks = JSON.parse(saved);
+}
+
+// Load saved tasks as soon as the page opens, then render them
+loadTasks();
+renderTasks();
+
+// ----- EVENT HANDLERS -----
+// Named handler: easier to read, debug, and reuse as the app grows/
+function handleTaskSubmit(event) {
   event.preventDefault();
   // .trim() removes extra spaces at the start/end
   const text = taskInput.value.trim();
@@ -53,18 +73,18 @@ taskForm.addEventListener("submit", function (event) {
 
   // Add the task object to our tasks array
   tasks.push(task);
-  // Update what the user sees
+  saveTasks();
   renderTasks();
   taskInput.value = "";
-});
+}
 
-// ----- UI RENDERING -----
+// Connect the handler to the form submit event
+taskForm.addEventListener("submit", handleTaskSubmit);
+
+/* ----- UI RENDERING -----
+ This function redraws the task list based on the tasks array */
 function renderTasks() {
-    /* 
-    This function redraws the task list based on the tasks array
-    */
-  taskList.innerHTML = "";  // Clear the list first so we don't duplicate items
-
+  taskList.innerHTML = ""; // Clear the list first so we don't duplicate items
   // Loop through each task object
   tasks.forEach(function (task, index) {
     const li = document.createElement("li");
@@ -84,16 +104,15 @@ function renderTasks() {
       // Remove this task from the array
       tasks.splice(index, 1);
       // Re-render the list
+      saveTasks();
       renderTasks();
     });
 
     li.appendChild(deleteBtn);
-
     // If the task is done, style it differently (later)
     if (task.done) {
       li.style.opacity = "0.5";
     }
-
     taskList.appendChild(li);
   });
 }
