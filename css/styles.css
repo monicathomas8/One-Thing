@@ -314,6 +314,19 @@ input,
 textarea {
   text-align: left;
 }
+
+.footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer span {
+  opacity: 0.9;
+}
+
 /* =========================
    MOBILE RESPONSIVE
 ========================= */
