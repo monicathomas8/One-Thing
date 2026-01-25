@@ -10,7 +10,7 @@ body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: #e9eef7;
   
-  background-image: url("/assets/images/background.jpg");
+  background-image: url("./assets/images/background.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -217,11 +217,11 @@ button.secondary:hover {
 
 /* Overlay images */
 #focusOverlay .overlayCard {
-  background: url("/assets/images/focus-overlay.jpg") center / cover no-repeat;
+  background: url("./assets/images/focus-overlay.jpg") center / cover no-repeat;
 }
 
 #breatheOverlay .overlayCard {
-  background: url("/assets/images/breathe-overlay.jpg") center / cover no-repeat;
+  background: url("./assets/images/breathe-overlay.jpg") center / cover no-repeat;
 }
 
 /* Dark layer for readability */
