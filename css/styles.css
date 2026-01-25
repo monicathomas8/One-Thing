@@ -15,7 +15,6 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-
 }
 
 /* =========================
@@ -255,7 +254,7 @@ button.secondary:hover {
   box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.18);
 
   /* default: paused until Start is pressed */
-  animation: breathePulse 6s ease-in-out infinite;
+  animation: breathePulse 15s ease-in-out infinite;
   animation-play-state: paused;
 }
 

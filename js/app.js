@@ -51,6 +51,9 @@ const breatheOverlay = document.getElementById("breatheOverlay");
 const breatheStartBtn = document.getElementById("breatheStartBtn");
 const breatheCloseBtn = document.getElementById("breatheCloseBtn");
 const pageBreatheBtn = document.getElementById("pageBreatheBtn");
+const breatheCircle = document.querySelector(".breatheCircle");
+const breatheStatus = document.getElementById("breatheStatus");
+
 
 
 
@@ -460,6 +463,62 @@ function closeBreatheOverlay() {
     Hide the breathe overlay.
     */
   breatheOverlay.hidden = true;
+  stopBreathing();
+}
+
+let breatheIntervalId = null;
+
+function startBreathing() {
+  /*
+    Start the breathing animation and text prompts with timing.
+    */
+  if (!breatheCircle) return;
+
+  // Prevent stacking multiple intervals if user clicks Start again
+  if (breatheIntervalId) clearInterval(breatheIntervalId);
+
+  breatheCircle.classList.add("isBreathing");
+  breatheStatus.textContent = "Let’s begin. Inhale…"
+
+  // Phase timings (ms) — tweak these anytime
+  const phases = [
+    { text: "Inhale…", duration: 4000 },
+    { text: "Hold…", duration: 3000 },
+    { text: "Exhale…", duration: 5000 },
+    { text: "Hold…", duration: 3000 },
+  ];
+
+
+  let phaseIndex = 0;
+
+  function showPhase() {
+    breatheStatus.textContent = phases[phaseIndex].text;
+
+    // Schedule next phase using the current phase duration
+    const nextDuration = phases[phaseIndex].duration;
+    phaseIndex = (phaseIndex + 1) % phases.length;
+
+    breatheIntervalId = setTimeout(showPhase, nextDuration);
+  }
+
+  // Start immediately
+  showPhase();
+}
+
+function stopBreathing() {
+  /*
+    Stop the breathing animation and text prompts.
+    */
+  if (!breatheCircle) return;
+  breatheCircle.classList.remove("isBreathing");
+
+  // Stop the text loop
+  if (breatheIntervalId) {
+    clearTimeout(breatheIntervalId);
+    breatheIntervalId = null;
+  }
+
+  breatheStatus.textContent = "Ready when you are.";
 }
 
 // ======================= 7) INIT / BOOTSTRAP =======================
@@ -537,4 +596,6 @@ focusBreatheBtn.addEventListener("click", openBreatheOverlay);
 // Breathe overlay buttons
 breatheCloseBtn.addEventListener("click", closeBreatheOverlay);
 pageBreatheBtn.addEventListener("click", openBreatheOverlay);
+breatheStartBtn.addEventListener("click", startBreathing);
+
 
