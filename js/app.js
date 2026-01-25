@@ -1,6 +1,7 @@
-/* ----- DAILY AFFIRMATION -----
- We keep a list of affirmations, then pick one based on today's date.
- Result: it stays the same all day, and changes automatically tomorrow.
+// =======================1) DAILY AFFIRMATIONS (DATA) =======================
+/*
+  We keep a list of affirmations, then pick one based on today's date.
+  Result: it stays the same all day, and changes automatically tomorrow.
 */
 const affirmations = [
   "Ok, we’ve got this. One small step counts.",
@@ -18,28 +19,37 @@ const affirmations = [
   "You don’t need to do it all - just something.",
 ];
 
-/*------- DAILY AFFIRMATION LOGIC -----
-Get today's day-of-month (1–31)
-Turn that into a safe index within the affirmations array (0 → last index)
-Set the text on the page 
-*/
-const today = new Date().getDate();
-const affirmationIndex = today % affirmations.length;
-document.getElementById("affirmationText").textContent =
-  affirmations[affirmationIndex];
 
-// ----- TASK FORM ELEMENTS -----
-const taskForm = document.getElementById("taskForm"); // The <form> that wraps the task input and Add button
-const taskInput = document.getElementById("taskInput"); // The <input> where the user types a new task
-const taskList = document.getElementById("taskList"); // The <ul> that will contain the list of tasks
+// =======================2) DOM ELEMENTS (REFERENCES) =======================
+// The <form> that wraps the task input and Add button
+const taskForm = document.getElementById("taskForm");
 
-/* ----- TASK DATA -----
- This array will hold all task objects in memory
+// The <input> where the user types a new task
+const taskInput = document.getElementById("taskInput");
+
+// The <ul> that will contain the list of tasks
+const taskList = document.getElementById("taskList");
+
+// The element where the daily affirmation appears
+const affirmationTextEl = document.getElementById("affirmationText");
+
+// The hint that shows when there are no tasks
+const doneHint = document.getElementById("doneHint");
+
+
+
+// ======================= 3) STATE (APP DATA) =======================
+/*
+  This array will hold all task objects in memory.
+  Later we’ll add vibe fields (impact/time/pressure), notes, etc.
 */
 let tasks = [];
 
-/* ----- LOCAL STORAGE -----
- LocalStorage can only store strings, so we use JSON to save/restore our tasks array. */
+
+// ======================= 4) STORAGE HELPERS (LOCAL STORAGE) =======================
+/*
+  LocalStorage can only store strings, so we use JSON to save/restore our tasks array.
+*/
 function saveTasks() {
   localStorage.setItem("oneThingTasks", JSON.stringify(tasks));
 }
@@ -54,42 +64,43 @@ function loadTasks() {
   tasks = JSON.parse(saved);
 }
 
-// Load saved tasks as soon as the page opens, then render them
-loadTasks();
-renderTasks();
 
-// ----- EVENT HANDLERS -----
-// Named handler: easier to read, debug, and reuse as the app grows/
-function handleTaskSubmit(event) {
-  event.preventDefault();
-  // .trim() removes extra spaces at the start/end
-  const text = taskInput.value.trim();
-  if (!text) return; // This prevents blank tasks being added
-  // Create a task object instead of just text
-  const task = {
-    text: text,
-    done: false,
-  };
+// ======================= 5) CORE LOGIC (UI + APP BEHAVIOUR) =======================
 
-  // Add the task object to our tasks array
-  tasks.push(task);
-  saveTasks();
-  renderTasks();
-  taskInput.value = "";
+function setDailyAffirmation() {
+    /*
+    DAILY AFFIRMATION LOGIC
+    - Get today's day-of-month (1–31)
+    - Turn that into a safe index within the affirmations array
+    - Set the text on the page
+    */
+  const today = new Date().getDate();
+  const affirmationIndex = today % affirmations.length;
+  affirmationTextEl.textContent = affirmations[affirmationIndex];
 }
 
-// Connect the handler to the form submit event
-taskForm.addEventListener("submit", handleTaskSubmit);
 
-/* ----- UI RENDERING -----
- This function redraws the task list based on the tasks array */
 function renderTasks() {
-  taskList.innerHTML = ""; // Clear the list first so we don't duplicate items
-  // Loop through each task object
+    /*
+    UI RENDERING This function redraws the task list based on the tasks array
+    */
+  doneHint.hidden = tasks.length === 0;
+    // Show the "click to mark done" hint only if there are tasks
+
+  taskList.innerHTML = "";
+    // Clear the list first so we don't duplicate items
+
   tasks.forEach(function (task, index) {
+    // Loop through each task object in the tasks array
     const li = document.createElement("li");
-    // Show the task text
-    li.textContent = task.text;
+
+    li.textContent = task.text;  // Show the task text
+   
+    li.addEventListener("click", function () {
+        // Clicking the task text toggles done/undone
+    toggleTaskDone(index);
+    });
+
 
     // Create a delete button
     const deleteBtn = document.createElement("button");
@@ -100,19 +111,79 @@ function renderTasks() {
     deleteBtn.style.border = "none";
     deleteBtn.style.cursor = "pointer";
 
-    deleteBtn.addEventListener("click", function () {
-      // Remove this task from the array
-      tasks.splice(index, 1);
-      // Re-render the list
-      saveTasks();
-      renderTasks();
+    deleteBtn.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent the li click event from firing
+        deleteTask(index);
     });
 
     li.appendChild(deleteBtn);
     // If the task is done, style it differently (later)
     if (task.done) {
-      li.style.opacity = "0.5";
+    li.classList.add("done");
     }
+
+
     taskList.appendChild(li);
   });
 }
+
+// ======================= 6) EVENT HANDLERS =======================
+
+function handleTaskSubmit(event) {
+    // Handle the form submission to add a new task
+  event.preventDefault();
+    // Prevent the form from reloading the page
+
+  // Get the text the user typed (trim removes extra spaces)
+  const text = taskInput.value.trim();
+
+  // Prevent blank tasks being added
+  if (!text) return;
+
+  // Create a task object (we’ll expand this later with vibe fields)
+  const task = {
+    text: text,
+    done: false,
+  };
+
+  // Update state
+  tasks.push(task);
+
+  // Persist + update UI
+  saveTasks();
+  renderTasks();
+
+  // Reset input for nicer UX
+  taskInput.value = "";
+}
+
+
+function deleteTask(index) {
+    //Delete a task by its index in the tasks array
+  tasks.splice(index, 1);
+  saveTasks();
+  renderTasks();
+}
+
+
+
+function toggleTaskDone(index) {
+    /*
+    Toggle a task between done / not done
+    */
+  
+  tasks[index].done = !tasks[index].done;
+  // Flip the boolean value (true becomes false, false becomes true)
+  saveTasks();
+  renderTasks();
+}
+
+
+// ======================= 7) INIT / BOOTSTRAP =======================
+// Connect events
+taskForm.addEventListener("submit", handleTaskSubmit);
+
+// Load saved data first, then render UI
+loadTasks();
+setDailyAffirmation();
+renderTasks();

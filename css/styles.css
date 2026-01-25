@@ -74,6 +74,8 @@ button.secondary {
 }
 
 .list li {
+  cursor: pointer;
+  user-select: none;
   padding: 10px 12px;
   border-radius: 12px;
   background: rgba(255,255,255,0.04);
@@ -81,7 +83,17 @@ button.secondary {
   margin-bottom: 8px;
 }
 
+.list li:hover {
+  background: rgba(255,255,255,0.06);
+}
+
 .focusText {
   font-size: 18px;
   margin: 10px 0;
+}
+
+/* Done tasks look softer and slightly crossed out */
+.done {
+  opacity: 0.55;
+  text-decoration: line-through;
 }
