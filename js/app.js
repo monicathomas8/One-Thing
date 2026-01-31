@@ -53,9 +53,32 @@ const breatheCloseBtn = document.getElementById("breatheCloseBtn");
 const pageBreatheBtn = document.getElementById("pageBreatheBtn");
 const breatheCircle = document.querySelector(".breatheCircle");
 const breatheStatus = document.getElementById("breatheStatus");
+const navBreatheBtn = document.getElementById("navBreatheBtn");
 
 
+// ======================= MOBILE PANELS =======================
+const isMobile = window.matchMedia("(max-width: 520px)");
 
+const panelIds = ["affirmationCard", "brainDumpCard", "taskListCard", "vibeCard", "focusCard"];
+
+function setActivePanel(id) {
+  if (!isMobile.matches) return; // Desktop stays unchanged
+
+  panelIds.forEach((pid) => {
+    const el = document.getElementById(pid);
+    if (!el) return;
+    el.classList.toggle("isActive", pid === id);
+  });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Nav buttons (Today / Brain dump / List / One Thing)
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-panel]");
+  if (!btn) return;
+  setActivePanel(btn.dataset.panel);
+});
 
 // ======================= 3) STATE (APP DATA) =======================
 /*
@@ -146,6 +169,7 @@ function renderTasks() {
 
     // --- Action buttons row ---
     const actions = document.createElement("div");
+    actions.classList.add("actions");
     actions.style.marginTop = "10px";
     actions.style.display = "flex";
     actions.style.gap = "10px";
@@ -202,6 +226,10 @@ function openVibePanel(forTaskIndex) {
 
   // Show the panel
   vibeCard.hidden = false;
+
+  // NEW: on mobile, jump to the vibe screen
+  setActivePanel("vibeCard");
+
 }
 
 function closeVibePanel() {
@@ -210,6 +238,10 @@ function closeVibePanel() {
 */
   vibeCard.hidden = true;
   vibeTaskIndex = null;
+
+  // NEW: on mobile, return to the list (or brain dump)
+  setActivePanel("taskListCard");
+
 }
 
 function syncVibeButtonUI() {
@@ -529,6 +561,10 @@ taskForm.addEventListener("submit", handleTaskSubmit);
 loadTasks();
 setDailyAffirmation();
 renderTasks();
+// Default mobile view
+setActivePanel("brainDumpCard");
+
+// ======================= 8) VIBE PANEL EVENT LISTENERS =======================
 
 // When a vibe button is clicked, update selectedVibe and refresh UI.
 // We use ONE listener on the card (event delegation) instead of 9 separate listeners.
@@ -597,5 +633,6 @@ focusBreatheBtn.addEventListener("click", openBreatheOverlay);
 breatheCloseBtn.addEventListener("click", closeBreatheOverlay);
 pageBreatheBtn.addEventListener("click", openBreatheOverlay);
 breatheStartBtn.addEventListener("click", startBreathing);
-
-
+if (navBreatheBtn) {
+  navBreatheBtn.addEventListener("click", openBreatheOverlay);
+}

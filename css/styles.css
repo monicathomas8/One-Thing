@@ -1,15 +1,13 @@
 /* =========================
    RESET + BASE
 ========================= */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: #e9eef7;
-  
+
   background-image: url("../assets/images/background.jpg");
   background-size: cover;
   background-position: center center;
@@ -30,10 +28,7 @@ h1 {
   font-size: 32px;
 }
 
-.subtext {
-  margin: 0;
-  opacity: 0.85;
-}
+.subtext { margin: 0; opacity: 0.85; }
 
 .container {
   max-width: 720px;
@@ -41,6 +36,19 @@ h1 {
   padding: 16px;
   display: grid;
   gap: 14px;
+}
+
+/* =========================
+   MOBILE NAV (hidden by default)
+========================= */
+.mobileNav {
+  display: none;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto 10px;
+  max-width: 560px;
+  padding: 0 16px 10px;
 }
 
 /* =========================
@@ -56,9 +64,7 @@ h1 {
   margin: 0 auto;
 }
 
-.card .row {
-  justify-content: center;
-}
+.card .row { justify-content: center; }
 
 /* =========================
    FORMS
@@ -79,9 +85,7 @@ textarea {
   color: #e9eef7;
 }
 
-input {
-  flex: 1;
-}
+input { flex: 1; }
 
 textarea {
   resize: vertical;
@@ -99,19 +103,11 @@ button {
   background: #e9eef7;
   color: #0f1115;
   font-weight: 600;
-
-  transition:
-    background-color 0.15s ease,
-    transform 0.05s ease;
+  transition: background-color 0.15s ease, transform 0.05s ease;
 }
 
-button:hover {
-  background-color: rgba(255, 255, 255, 0.85);
-}
-
-button:active {
-  transform: scale(0.97);
-}
+button:hover { background-color: rgba(255, 255, 255, 0.85); }
+button:active { transform: scale(0.97); }
 
 button.secondary {
   background: transparent;
@@ -119,9 +115,7 @@ button.secondary {
   color: #e9eef7;
 }
 
-button.secondary:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-}
+button.secondary:hover { background-color: rgba(255, 255, 255, 0.12); }
 
 /* =========================
    VIBE PANEL
@@ -141,9 +135,7 @@ button.secondary:hover {
   cursor: pointer;
 }
 
-.vibeRow button:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-}
+.vibeRow button:hover { background-color: rgba(255, 255, 255, 0.08); }
 
 .vibeRow button.selected {
   background-color: rgba(255, 255, 255, 0.18);
@@ -174,13 +166,8 @@ button.secondary:hover {
   text-align: left;
 }
 
-.list li:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.done {
-  opacity: 0.55;
-}
+.list li:hover { background: rgba(255, 255, 255, 0.08); }
+.done { opacity: 0.55; }
 
 /* =========================
    FOCUS + BREATHE OVERLAYS
@@ -195,11 +182,8 @@ button.secondary:hover {
   z-index: 1000;
 }
 
-.overlay[hidden] {
-  display: none !important;
-}
+.overlay[hidden] { display: none !important; }
 
-/* Solid overlay cards with images */
 .overlayCard {
   position: relative;
   width: 100%;
@@ -208,14 +192,10 @@ button.secondary:hover {
   padding: 18px;
   overflow: hidden;
   background: #171a21;
-  justify-content: center;
 }
 
-.overlayCard .row{
-  justify-content: center;
-}
+.overlayCard .row { justify-content: center; }
 
-/* Overlay images */
 #focusOverlay .overlayCard {
   background: url("../assets/images/focus-overlay.jpg") center / cover no-repeat;
 }
@@ -224,7 +204,6 @@ button.secondary:hover {
   background: url("../assets/images/breathe-overlay.jpg") center / cover no-repeat;
 }
 
-/* Dark layer for readability */
 #focusOverlay .overlayCard::before,
 #breatheOverlay .overlayCard::before {
   content: "";
@@ -247,73 +226,37 @@ button.secondary:hover {
   height: 180px;
   margin: 18px auto;
   border-radius: 50%;
-
-  /* soft “glow” */
   background: rgba(233, 238, 247, 0.08);
   border: 1px solid rgba(233, 238, 247, 0.20);
   box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.18);
-
-  /* default: paused until Start is pressed */
   animation: breathePulse 15s ease-in-out infinite;
   animation-play-state: paused;
 }
 
-/* When breathing is active, we’ll add a class to start animation */
-.breatheCircle.isBreathing {
-  animation-play-state: running;
-}
+.breatheCircle.isBreathing { animation-play-state: running; }
 
 @keyframes breathePulse {
-  /* Inhale */
-  0% {
-    transform: scale(0.88);
-    box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.12);
-  }
-
-  /* Fully in */
-  40% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 18px rgba(233, 238, 247, 0.08);
-  }
-
-  /* Exhale */
-  100% {
-    transform: scale(0.88);
-    box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.12);
-  }
+  0% { transform: scale(0.88); box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.12); }
+  40% { transform: scale(1.05); box-shadow: 0 0 0 18px rgba(233, 238, 247, 0.08); }
+  100% { transform: scale(0.88); box-shadow: 0 0 0 0 rgba(233, 238, 247, 0.12); }
 }
 
-/* Respect reduced motion settings */
 @media (prefers-reduced-motion: reduce) {
   .breatheCircle,
-  .breatheCircle.isBreathing {
-    animation: none;
-  }
+  .breatheCircle.isBreathing { animation: none; }
 }
 
 /* =========================
    TEXT
 ========================= */
-.focusText {
-  font-size: 18px;
-  margin: 10px 0;
-}
+.focusText { font-size: 18px; margin: 10px 0; }
+.focusTaskText { font-size: 20px; margin: 8px 0 14px; }
 
-.focusTaskText {
-  font-size: 20px;
-  margin: 8px 0 14px;
-}
-
-/* Centre top-level app text */
 .header,
-.card {
-  text-align: center;
-}
+.card { text-align: center; }
 
 input,
-textarea {
-  text-align: left;
-}
+textarea { text-align: left; }
 
 .footer {
   margin-top: auto;
@@ -323,76 +266,56 @@ textarea {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.footer span {
-  opacity: 0.9;
-}
-
 /* =========================
-   MOBILE RESPONSIVE
+   RESPONSIVE
 ========================= */
 
 /* Tablets + down */
 @media (max-width: 768px) {
-  .container {
-    padding: 14px;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  .card {
-    max-width: 620px;
-  }
+  .container { padding: 14px; }
+  h1 { font-size: 28px; }
+  .card { max-width: 620px; }
 }
 
 /* Phones */
 @media (max-width: 520px) {
-  .header {
-    padding: 20px 14px 6px;
+  .header { padding: 20px 14px 6px; }
+  h1 { font-size: 24px; }
+  .subtext { font-size: 14px; }
+
+  .container { padding: 12px; gap: 12px; }
+
+  /* Show mobile nav */
+  .mobileNav { display: flex; }
+
+  /* ONE PANEL AT A TIME */
+  main.container .card { display: none; }
+  main.container .card.isActive { display: block; }
+
+  .card { max-width: 100%; padding: 14px; }
+
+  .row { flex-direction: column; align-items: stretch; }
+
+  button { width: 100%; padding: 13px 14px; }
+
+  textarea { min-height: 110px; }
+
+  /* Task action buttons stack nicely */
+  .actions { display: grid !important; gap: 8px !important; }
+
+  /* FULL-PAGE BREATHE overlay on mobile */
+  #breatheOverlay {
+    place-items: stretch;
+    padding: 0;
   }
 
-  h1 {
-    font-size: 24px;
-  }
-
-  .subtext {
-    font-size: 14px;
-  }
-
-  .container {
-    padding: 12px;
-    gap: 12px;
-  }
-
-  /* Cards go full width on mobile */
-  .card {
-    max-width: 100%;
-    padding: 14px;
-  }
-
-  /* Stack input + button vertically */
-  .row {
+  #breatheOverlay .overlayCard {
+    max-width: none;
+    border-radius: 0;
+    min-height: 100vh;
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
-  }
-
-  /* Bigger tap targets */
-  button {
-    width: 100%;
-    padding: 13px 14px;
-  }
-
-  /* Overlays fit better on small screens */
-  .overlay {
-    padding: 12px;
-  }
-
-  .overlayCard {
-    padding: 16px;
-  }
-
-  textarea {
-    min-height: 110px;
+    justify-content: center;
+    padding: 22px 16px;
   }
 }
