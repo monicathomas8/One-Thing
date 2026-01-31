@@ -1,21 +1,159 @@
-# One Thing App
-A simple, calming web app designed to help you focus on one thing at a time.  
-Set your intention for the day, block out the noise, and keep your focus clear and manageable.
-This project was built as a small, fun app to practise clean HTML, CSS, and JavaScript, and is deployed using GitHub Pages.
+# One Thing App 🌱
+
+**One Thing** is a calm, mobile-first web app designed to help reduce overwhelm by guiding you to focus on just one meaningful task at a time.
+
+Instead of long to-do lists and pressure to do everything, this app encourages you to:
+- get thoughts out of your head
+- tune into the *vibe* of each task
+- choose one gentle focus for today
+- breathe before you begin
+
+> *Give me the vibe, I’ll do the sorting. You’re not doing this alone.*
+
+---
 
 ## 🚀 Live Site
-[View the live app](https://monicathomas8.github.io/One-Thing/)
 
-## ✨ Features
-- Minimal, distraction-free interface  
-- One daily focus input  
-- Encouraging, gentle user experience  
-- Fully responsive layout  
+👉 **[View the live app](https://monicathomas8.github.io/One-Thing/)**
+
+---
+
+## ✨ What the app does
+
+### 🌤️ Daily affirmation
+- Displays a supportive daily focus message.
+- Changes automatically each day, but stays consistent throughout the day.
+
+### 🧠 Brain dump
+- Quickly add tasks without pressure.
+- Encourages keeping tasks small and manageable.
+
+### 🎛️ Vibe check (optional)
+After adding a task, you can give it a quick “vibe”:
+- **Relief level**: big / medium / small  
+- **Time needed**: 5m / 15m / 30m / 60m+  
+- **Time sensitivity**: soon / later / not really  
+
+These values are used to help the app decide what your *One Thing* should be.
+
+### 📋 Task list
+- View all tasks in one place.
+- Mark tasks as done.
+- Delete tasks you no longer need.
+- See progress indicators such as:
+  - started status
+  - minutes completed
+  - notes preview
+
+### 🎯 Pick My One Thing
+- Scores tasks based on their vibe.
+- Chooses gently using a mix of logic and randomness.
+- Opens **Focus Mode** to help you start without friction.
+
+### 🧘 Focus Mode
+- Appears as a distraction-free overlay.
+- Add notes or a tiny first step.
+- Track progress with “I did 5 mins”.
+- Mark tasks complete directly from the overlay.
+
+### 🌬️ Breathing tool
+- Dedicated breathing experience.
+- Full-screen on mobile for maximum calm.
+- Animated breathing circle with timed prompts.
+- Can be accessed independently at any time.
+
+### 💾 Local storage
+- Tasks, notes, and progress are saved automatically.
+- No accounts, no sign-ups.
+- Data persists between sessions using `localStorage`.
+
+---
+
+## 📱 Mobile-first experience
+
+- **Desktop**: dashboard-style layout where all sections are visible.
+- **Mobile**: one panel at a time to reduce cognitive overload.
+
+Mobile navigation allows switching between:
+- Today
+- Brain dump
+- List
+- One Thing
+- Breathe
+
+This design choice was made intentionally to make the app feel calm and focused on smaller screens.
+
+---
+
+## 🧠 How “One Thing” is chosen
+
+Each task is scored based on its vibe:
+- Bigger emotional relief scores higher
+- Time-sensitive tasks score higher
+- Shorter tasks score higher (easier to start)
+
+The app then:
+- takes the top 3 scored tasks
+- chooses one at random
+
+This avoids the app feeling rigid or judgmental while still offering helpful guidance.
+
+---
 
 ## 🛠️ Built With
-- HTML  
-- CSS  
-- JavaScript  
+
+- HTML5  
+- CSS3  
+- Vanilla JavaScript  
+- LocalStorage  
+- GitHub Pages (deployment)
+
+No frameworks, no libraries — just clean, readable front-end code.
+
+---
+
+## 🧪 Testing
+
+### Manual testing
+- Tasks can be added and removed correctly
+- Blank tasks are prevented
+- Vibe selections visibly update and save
+- Focus Mode opens and closes correctly
+- Notes save automatically as you type
+- Progress tracking updates task previews
+- Breathing animation starts and stops cleanly
+- Tasks persist after page refresh
+
+### Responsive testing
+- Desktop layout behaves as expected
+- Mobile layout switches to single-panel navigation
+- Breathing tool fills the screen on mobile
+
+---
+
+## 🔮 Future improvements
+
+- Edit task text after creation
+- Search or filter tasks
+- Optional gentle stats (no pressure)
+- Sound options for breathing (toggleable)
+- Light / dark theme toggle
+
+---
 
 ## 📌 Purpose
-This project was created as a lightweight, one-day build to reinforce core front-end skills and create something genuinely useful for everyday life.
+
+This project was built as a **one-day app** to practise:
+- clean HTML structure
+- responsive CSS
+- thoughtful JavaScript state management
+- mobile-first UX decisions
+
+More importantly, it was designed to be **genuinely useful**, not just a technical exercise.
+
+---
+
+## ✨ Author
+
+Built with intention by **Monica**  
+Front-end developer with a focus on calm, human-centred digital experiences.
