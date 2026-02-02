@@ -104,11 +104,11 @@ This avoids the app feeling rigid or judgmental while still offering helpful gui
 
 - HTML5  
 - CSS3  
-- Vanilla JavaScript  
+- JavaScript  
 - LocalStorage  
 - GitHub Pages (deployment)
 
-No frameworks, no libraries — just clean, readable front-end code.
+No frameworks, no libraries, just clean, readable front-end code.
 
 ---
 
@@ -155,5 +155,5 @@ More importantly, it was designed to be **genuinely useful**, not just a technic
 
 ## ✨ Author
 
-Built with intention by **Monica**  
+Built with intention by **Monica Thomas**  
 Front-end developer with a focus on calm, human-centred digital experiences.
