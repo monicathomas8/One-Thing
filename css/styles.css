@@ -75,6 +75,70 @@ h1 {
   border-radius: 999px;
 }
 
+#todayContinueBtn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#todayContinueBtn.isVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Continue button fade */
+#todayContinueBtn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+#todayContinueBtn.isVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* “Ready when you are” fade */
+#todayReadyText {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#todayReadyText.isVisible {
+  opacity: 1;
+}
+
+/* Question screen back button – start hidden */
+#screen-question #backToTodayBtn {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  transition-delay: 4s;
+}
+
+/* When Question screen is active – fade + rise in */
+#screen-question.isActive #backToTodayBtn {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#screen-brainDump .brainDumpBackBtn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  transition-delay: 2s;
+}
+
+#screen-brainDump.isActive .brainDumpBackBtn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
 /* =========================
    SCREENS (ONE AT A TIME)
 ========================= */

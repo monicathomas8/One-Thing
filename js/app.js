@@ -416,7 +416,9 @@ document.addEventListener("click", (e) => {
 
 // Today screen CTAs
 if (goBrainDumpBtn) {
-  goBrainDumpBtn.addEventListener("click", () => showScreen("screen-brainDump"));
+  goBrainDumpBtn.addEventListener("click", () => {
+    showScreen("screen-brainDump");
+  });
 }
 
 if (goBreatheBtn) {
@@ -512,14 +514,10 @@ menuOverlay.addEventListener("click", (e) => {
   showScreen(btn.dataset.screen);
 });
 
-
 // ======================= 9) INIT / BOOTSTRAP =======================
 loadTasks();
 setDailyAffirmation();
 renderTasks();
-
-// Default view
-showScreen("screen-today");
 
 // Keep notes saved live
 if (focusNotes) {
@@ -530,3 +528,70 @@ if (focusNotes) {
     renderTasks();
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const introScreen = document.getElementById("screen-intro");
+  const todayScreen = document.getElementById("screen-today");
+  const questionScreen = document.getElementById("screen-question");
+
+  const backToTodayBtn = document.getElementById("backToTodayBtn");
+  const todayContinueBtn = document.getElementById("todayContinueBtn");
+  const todayReadyText = document.getElementById("todayReadyText");
+
+  function showScreen(screen) {
+    document.querySelectorAll(".screen").forEach((s) => {
+      s.classList.remove("isActive");
+    });
+    screen.classList.add("isActive");
+  }
+
+  function prepTodayScreen() {
+    // Hide + reset “ready” text
+    if (todayReadyText) todayReadyText.classList.remove("isVisible");
+
+    // Hide Continue button until we reveal it
+    if (todayContinueBtn) todayContinueBtn.classList.remove("isVisible");
+
+    // Show Continue button first
+    setTimeout(() => {
+      if (todayContinueBtn) todayContinueBtn.classList.add("isVisible");
+    }, 3000);
+
+    // Then, a little later, show “Ready when you are.”
+    setTimeout(() => {
+      if (todayReadyText) todayReadyText.classList.add("isVisible");
+    }, 5000);
+  }
+
+  backToTodayBtn?.addEventListener("click", () => {
+    showScreen(todayScreen);
+    prepTodayScreen();
+  });
+
+  todayContinueBtn?.addEventListener("click", () => {
+    showScreen(questionScreen);
+  });
+
+  // Start on Intro
+  showScreen(introScreen);
+
+  // Intro → Today’s Focus (auto)
+  setTimeout(() => {
+    showScreen(todayScreen);
+    prepTodayScreen();
+  }, 2500);
+
+  function showBrainDumpBackWithDelay(delay = 1500) {
+  const backBtn = document.getElementById("backToTodayBtn");
+  if (!backBtn) return;
+
+  backBtn.classList.remove("isVisible");
+
+  setTimeout(() => {
+    backBtn.classList.add("isVisible");
+  }, delay);
+}
+
+});
+
+

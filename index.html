@@ -12,37 +12,57 @@
 </head>
 
 <body>
-  <header class="header">
-    <h1>One Thing</h1>
-    <p class="subtext">
-      Give me the vibe, I’ll do the sorting. You’re not doing this alone.
-    </p>
-  </header>
+  <!-- SCREEN 1: Intro overlay -->
+  <section class="screen isActive" id="screen-intro">
+    <div class="screenInner">
+      <header class="header">
+        <h1>One Thing</h1>
+        <p class="subtext">
+          Give me the vibe, I’ll do the sorting. You’re not doing this alone.
+        </p>
+      </header>
+    </div>
+  </section>
+
+  <!-- Navigation stays global -->
   <nav class="mobileNav" aria-label="App navigation">
     <button type="button" class="secondary" id="menuBtn">☰ Menu</button>
   </nav>
 
   <main class="container">
-    <!-- Today's Focus -->
-    <section class="screen isActive" id="screen-today">
+    <!-- SCREEN 2: Today's Focus -->
+  <section class="screen" id="screen-today">
+    <div class="screenInner">
+      <div class="card">
+        <h2>Today’s focus</h2>
+        <p id="affirmationText">Loading your daily affirmation…</p>
+      </div>
+      <button type="button" id="todayContinueBtn">
+        Continue
+      </button>
+      <p id="todayReadyText" class="hint">Ready when you are.</p>
+    </div>
+  </section>
+  <!-- SCREEN 3: What do you need right now -->
+  <section class="screen" id="screen-question">
       <div class="screenInner">
         <div class="card">
-          <h2>Today’s focus</h2>
-          <p id="affirmationText">Loading your daily affirmation…</p>
-        </div>
-
-        <div class="card">
           <h2>What do you need right now?</h2>
+
           <div class="row">
             <button type="button" id="goBrainDumpBtn">Brain dump</button>
             <button type="button" class="secondary" id="goBreatheBtn">Breathe</button>
           </div>
+
           <p class="hint">No thinking. Just pick one.</p>
         </div>
+        <button type="button" class="secondary" id="backToTodayBtn">
+            Back to today’s focus
+          </button>
       </div>
     </section>
 
-
+  
     <!-- Add Task -->
     <section class="screen" id="screen-brainDump">
       <div class="screenInner">
@@ -54,6 +74,9 @@
           </form>
           <p class="hint">No pressure. Just get it out of your head.</p>
         </section>
+        <button type="button" class="secondary brainDumpBackBtn">
+            Back
+        </button>
       </div>
     </section>
 
@@ -72,7 +95,6 @@
               <button type="button" data-value="small">Small</button>
             </div>
           </div>
-
           <div class="vibeGroup">
             <h3>Time needed</h3>
             <div class="vibeRow" data-field="minutes">
@@ -82,7 +104,6 @@
               <button type="button" data-value="60">60m+</button>
             </div>
           </div>
-
           <div class="vibeGroup">
             <h3>Time-sensitive?</h3>
             <div class="vibeRow" data-field="pressure">
@@ -91,7 +112,6 @@
               <button type="button" data-value="none">Not really</button>
             </div>
           </div>
-
           <div class="row">
             <button type="button" id="vibeSaveBtn">Save vibe</button>
             <button type="button" class="secondary" id="vibeSkipBtn">Skip</button>
@@ -99,7 +119,6 @@
         </section>
       </div>
     </section>
-
     <!-- Tasks list -->
     <section class="screen" id="screen-list">
       <div class="screenInner">
@@ -112,7 +131,6 @@
         </section>
       </div>
     </section>
-
     <!-- Focus task -->
     <section class="screen" id="screen-oneThing">
       <div class="screenInner">
@@ -130,19 +148,15 @@
         </section>
       </div>
     </section>
-
     <!-- Focus Mode Overlay (hidden until a task is picked) -->
     <div id="focusOverlay" class="overlay" hidden>
       <div class="overlayCard" role="dialog" aria-modal="true" aria-labelledby="focusTitle">
         <h1 id="focusTitle">Ok, we’ve got this.</h1>
-
         <h3 class="hint">Your One Thing is:</h3>
         <h4 id="focusOverlayTask" class="focusTaskText">…</h4>
-
         <label for="focusNotes" class="hint">Notes (optional)</label>
         <textarea id="focusNotes" rows="4"
           placeholder="Anything that will make this easier? A tiny first step?"></textarea>
-
         <div class="row">
           <button type="button" id="focusStartBtn">Start</button>
           <button type="button" id="focusFiveBtn" class="secondary">
@@ -150,7 +164,6 @@
           </button>
           <button type="button" id="focusDoneBtn">Done</button>
         </div>
-
         <div class="row">
           <button type="button" id="focusBreatheBtn" class="secondary">
             Breathe
@@ -166,11 +179,8 @@
       <div class="overlayCard" role="dialog" aria-modal="true" aria-labelledby="breatheTitle">
         <h1 id="breatheTitle">Ok, breathe with me.</h1>
         <p class="hint">In for 4… hold for 4… out for 6… hold</p>
-
         <div class="breatheCircle" aria-hidden="true"></div>
-
         <p class="hint" id="breatheStatus">Ready when you are.</p>
-
         <div class="row">
           <button type="button" id="breatheStartBtn">Start breathing</button>
           <button type="button" class="secondary" id="breatheCloseBtn">
@@ -179,18 +189,15 @@
         </div>
       </div>
     </div>
-
     <div id="menuOverlay" class="overlay" hidden>
       <div class="overlayCard">
         <h2>Where would you like to go?</h2>
-
         <div class="row">
           <button data-screen="screen-today">Today</button>
           <button data-screen="screen-brainDump">Brain dump</button>
           <button data-screen="screen-list">Your list</button>
           <button data-screen="screen-oneThing">Your One Thing</button>
         </div>
-
         <div class="row">
           <button id="menuBreatheBtn" class="secondary">Breathe</button>
           <button id="menuCloseBtn" class="secondary">Close</button>
