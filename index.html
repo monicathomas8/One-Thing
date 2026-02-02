@@ -4,11 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>One Thing</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="./assets/favicon/site.webmanifest">
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favicon/site.webmanifest" />
   </head>
   <body>
     <header class="header">
@@ -18,24 +32,33 @@
       </p>
     </header>
     <nav class="mobileNav" aria-label="App navigation">
-      <button type="button" class="secondary" data-panel="affirmationCard">Today</button>
-      <button type="button" class="secondary" data-panel="brainDumpCard">Brain dump</button>
-      <button type="button" class="secondary" data-panel="taskListCard">List</button>
-      <button type="button" class="secondary" data-panel="focusCard">One Thing</button>
-      <button type="button" class="secondary" id="navBreatheBtn">Breathe</button>
-
+      <button type="button" class="secondary" data-panel="affirmationCard">
+        Today
+      </button>
+      <button type="button" class="secondary" data-panel="brainDumpCard">
+        Brain dump
+      </button>
+      <button type="button" class="secondary" data-panel="taskListCard">
+        List
+      </button>
+      <button type="button" class="secondary" data-panel="focusCard">
+        One Thing
+      </button>
+      <button type="button" class="secondary" id="navBreatheBtn">
+        Breathe
+      </button>
     </nav>
 
     <main class="container">
       <!-- Daily affirmation -->
       <section class="card" id="affirmationCard">
-        <h2>Today’s focus</h2>
+        <h1>Today’s focus</h1>
         <p id="affirmationText">Loading your daily affirmation…</p>
       </section>
 
       <!-- Add Task -->
       <section class="card" id="brainDumpCard">
-        <h2>Brain dump</h2>
+        <h1>Brain dump</h1>
         <form id="taskForm" class="row">
           <input
             id="taskInput"
@@ -118,10 +141,10 @@
           aria-modal="true"
           aria-labelledby="focusTitle"
         >
-          <h2 id="focusTitle">Ok, we’ve got this.</h2>
+          <h1 id="focusTitle">Ok, we’ve got this.</h1>
 
-          <p class="hint">Your One Thing is:</p>
-          <p id="focusOverlayTask" class="focusTaskText">…</p>
+          <h3 class="hint">Your One Thing is:</h3>
+          <h4 id="focusOverlayTask" class="focusTaskText">…</h4>
 
           <label for="focusNotes" class="hint">Notes (optional)</label>
           <textarea
@@ -156,7 +179,7 @@
           aria-modal="true"
           aria-labelledby="breatheTitle"
         >
-          <h2 id="breatheTitle">Ok, breathe with me.</h2>
+          <h1 id="breatheTitle">Ok, breathe with me.</h1>
           <p class="hint">In for 4… hold for 4… out for 6… hold</p>
 
           <div class="breatheCircle" aria-hidden="true"></div>
@@ -172,7 +195,10 @@
         </div>
       </div>
       <footer class="footer">
-        <p>Made with intention ✨ by Monica  © 2026 One Thing App. All rights reserved.</p>
+        <p>
+          Made with intention ✨ by Monica © 2026 One Thing App. All rights
+          reserved.
+        </p>
       </footer>
     </main>
     <script src="./js/app.js"></script>
