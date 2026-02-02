@@ -54,6 +54,13 @@ const breatheCircle = document.querySelector(".breatheCircle");
 const breatheStatus = document.getElementById("breatheStatus");
 const navBreatheBtn = document.getElementById("navBreatheBtn");
 
+// MENU OVERLAY ELEMENTS
+const menuBtn = document.getElementById("menuBtn");
+const menuOverlay = document.getElementById("menuOverlay");
+const menuCloseBtn = document.getElementById("menuCloseBtn");
+const menuBreatheBtn = document.getElementById("menuBreatheBtn");
+
+
 // Today screen buttons
 const goBrainDumpBtn = document.getElementById("goBrainDumpBtn");
 const goBreatheBtn = document.getElementById("goBreatheBtn");
@@ -481,6 +488,30 @@ if (breatheStartBtn) breatheStartBtn.addEventListener("click", startBreathing);
 // Page + nav breathe buttons
 if (pageBreatheBtn) pageBreatheBtn.addEventListener("click", openBreatheOverlay);
 if (navBreatheBtn) navBreatheBtn.addEventListener("click", openBreatheOverlay);
+
+// ======================= MENU OVERLAY EVENTS =======================
+
+menuBtn.addEventListener("click", () => {
+  menuOverlay.hidden = false;
+});
+
+menuCloseBtn.addEventListener("click", () => {
+  menuOverlay.hidden = true;
+});
+
+menuBreatheBtn.addEventListener("click", () => {
+  menuOverlay.hidden = true;
+  openBreatheOverlay();
+});
+
+// Navigate + close menu
+menuOverlay.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-screen]");
+  if (!btn) return;
+  menuOverlay.hidden = true;
+  showScreen(btn.dataset.screen);
+});
+
 
 // ======================= 9) INIT / BOOTSTRAP =======================
 loadTasks();

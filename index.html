@@ -19,12 +19,7 @@
     </p>
   </header>
   <nav class="mobileNav" aria-label="App navigation">
-    <button type="button" class="secondary" data-screen="screen-today">Today</button>
-    <button type="button" class="secondary" data-screen="screen-brainDump">Brain dump</button>
-    <button type="button" class="secondary" data-screen="screen-list">List</button>
-    <button type="button" class="secondary" data-screen="screen-oneThing">One Thing</button>
-
-    <button type="button" class="secondary" id="navBreatheBtn">Breathe</button>
+    <button type="button" class="secondary" id="menuBtn">☰ Menu</button>
   </nav>
 
   <main class="container">
@@ -184,6 +179,25 @@
         </div>
       </div>
     </div>
+
+    <div id="menuOverlay" class="overlay" hidden>
+      <div class="overlayCard">
+        <h2>Where would you like to go?</h2>
+
+        <div class="row">
+          <button data-screen="screen-today">Today</button>
+          <button data-screen="screen-brainDump">Brain dump</button>
+          <button data-screen="screen-list">Your list</button>
+          <button data-screen="screen-oneThing">Your One Thing</button>
+        </div>
+
+        <div class="row">
+          <button id="menuBreatheBtn" class="secondary">Breathe</button>
+          <button id="menuCloseBtn" class="secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
     <footer class="footer">
       <p>
         Made with intention ✨ by Monica © 2026 One Thing App. All rights
