@@ -75,26 +75,17 @@ h1 {
   border-radius: 999px;
 }
 
+/* Continue button fade (single source of truth) */
 #todayContinueBtn {
   opacity: 0;
+  transform: translateY(6px);
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 #todayContinueBtn.isVisible {
   opacity: 1;
-  pointer-events: auto;
-}
-
-/* Continue button fade */
-#todayContinueBtn {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
-}
-
-#todayContinueBtn.isVisible {
-  opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -107,37 +98,6 @@ h1 {
 #todayReadyText.isVisible {
   opacity: 1;
 }
-
-/* Question screen back button – start hidden */
-#screen-question #backToTodayBtn {
-  opacity: 0;
-  transform: translateY(6px);
-  pointer-events: none;
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-  transition-delay: 4s;
-}
-
-/* When Question screen is active – fade + rise in */
-#screen-question.isActive #backToTodayBtn {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-#screen-brainDump .brainDumpBackBtn {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
-  transition-delay: 2s;
-}
-
-#screen-brainDump.isActive .brainDumpBackBtn {
-  opacity: 1;
-  pointer-events: auto;
-}
-
 
 /* =========================
    SCREENS (ONE AT A TIME)
@@ -257,6 +217,54 @@ button.secondary:hover {
   background-color: rgba(255, 255, 255, 0.12);
 }
 
+/* Continue button fade (single source of truth) */
+#todayContinueBtn {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#todayContinueBtn.isVisible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Back button on Question screen: hidden by default */
+#screen-question #backToTodayBtn {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+/* When Question screen becomes active, animate it in after a delay */
+#screen-question.isActive #backToTodayBtn {
+  pointer-events: auto;
+  animation: fadeInUp 0.7s ease forwards;
+  animation-delay: 2s;
+}
+
+/* Keyframes (only needs to exist once in your CSS file) */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+#screen-brainDump .brainDumpBackBtn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  transition-delay: 2s;
+}
+
+#screen-brainDump.isActive .brainDumpBackBtn {
+  opacity: 1;
+  pointer-events: auto;
+}
 /* =========================
    VIBE PANEL
 ========================= */
