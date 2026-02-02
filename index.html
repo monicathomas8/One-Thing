@@ -1,206 +1,197 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>One Thing</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./assets/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./assets/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./assets/favicon/favicon-16x16.png"
-    />
-    <link rel="manifest" href="./assets/favicon/site.webmanifest" />
-  </head>
-  <body>
-    <header class="header">
-      <h1>One Thing</h1>
-      <p class="subtext">
-        Give me the vibe, I’ll do the sorting. You’re not doing this alone.
-      </p>
-    </header>
-    <nav class="mobileNav" aria-label="App navigation">
-      <button type="button" class="secondary" data-panel="affirmationCard">
-        Today
-      </button>
-      <button type="button" class="secondary" data-panel="brainDumpCard">
-        Brain dump
-      </button>
-      <button type="button" class="secondary" data-panel="taskListCard">
-        List
-      </button>
-      <button type="button" class="secondary" data-panel="focusCard">
-        One Thing
-      </button>
-      <button type="button" class="secondary" id="navBreatheBtn">
-        Breathe
-      </button>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Thing</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="./assets/favicon/site.webmanifest" />
+</head>
 
-    <main class="container">
-      <!-- Daily affirmation -->
-      <section class="card" id="affirmationCard">
-        <h1>Today’s focus</h1>
-        <p id="affirmationText">Loading your daily affirmation…</p>
-      </section>
+<body>
+  <header class="header">
+    <h1>One Thing</h1>
+    <p class="subtext">
+      Give me the vibe, I’ll do the sorting. You’re not doing this alone.
+    </p>
+  </header>
+  <nav class="mobileNav" aria-label="App navigation">
+    <button type="button" class="secondary" data-screen="screen-today">Today</button>
+    <button type="button" class="secondary" data-screen="screen-brainDump">Brain dump</button>
+    <button type="button" class="secondary" data-screen="screen-list">List</button>
+    <button type="button" class="secondary" data-screen="screen-oneThing">One Thing</button>
 
-      <!-- Add Task -->
-      <section class="card" id="brainDumpCard">
-        <h1>Brain dump</h1>
-        <form id="taskForm" class="row">
-          <input
-            id="taskInput"
-            type="text"
-            placeholder="Add a task… (keep it small)"
-            autocomplete="off"
-          />
-          <button type="submit">Add</button>
-        </form>
-        <p class="hint">No pressure. Just get it out of your head.</p>
-      </section>
+    <button type="button" class="secondary" id="navBreatheBtn">Breathe</button>
+  </nav>
 
-      <!-- Vibe check (hidden until a task is added) -->
-      <section class="card" id="vibeCard" hidden>
-        <h2>Quick vibe check</h2>
-        <p class="hint">Give me the vibe, I’ll do the sorting.</p>
-
-        <div class="vibeGroup">
-          <h3>Relief level</h3>
-          <div class="vibeRow" data-field="impact">
-            <button type="button" data-value="big">Big</button>
-            <button type="button" data-value="medium">Medium</button>
-            <button type="button" data-value="small">Small</button>
-          </div>
+  <main class="container">
+    <!-- Today's Focus -->
+    <section class="screen isActive" id="screen-today">
+      <div class="screenInner">
+        <div class="card">
+          <h2>Today’s focus</h2>
+          <p id="affirmationText">Loading your daily affirmation…</p>
         </div>
 
-        <div class="vibeGroup">
-          <h3>Time needed</h3>
-          <div class="vibeRow" data-field="minutes">
-            <button type="button" data-value="5">5m</button>
-            <button type="button" data-value="15">15m</button>
-            <button type="button" data-value="30">30m</button>
-            <button type="button" data-value="60">60m+</button>
-          </div>
-        </div>
-
-        <div class="vibeGroup">
-          <h3>Time-sensitive?</h3>
-          <div class="vibeRow" data-field="pressure">
-            <button type="button" data-value="soon">Soon</button>
-            <button type="button" data-value="later">Later</button>
-            <button type="button" data-value="none">Not really</button>
-          </div>
-        </div>
-
-        <div class="row">
-          <button type="button" id="vibeSaveBtn">Save vibe</button>
-          <button type="button" class="secondary" id="vibeSkipBtn">Skip</button>
-        </div>
-      </section>
-
-      <!-- Tasks list -->
-      <section class="card" id="taskListCard">
-        <h2>Your list</h2>
-        <ul id="taskList" class="list"></ul>
-        <p class="hint" id="doneHint" hidden>
-          Tip: click a task to mark it as done.
-        </p>
-      </section>
-
-      <!-- Focus task -->
-      <section class="card" id="focusCard">
-        <h2>Your One Thing</h2>
-        <p id="focusText" class="focusText">
-          Not picked yet. When you’re ready, we’ll choose one.
-        </p>
-        <div class="row">
-          <button id="pickBtn" type="button">Pick my One Thing</button>
-          <button id="pageBreatheBtn" type="button" class="secondary">
-            Breathe
-          </button>
-        </div>
-      </section>
-
-      <!-- Focus Mode Overlay (hidden until a task is picked) -->
-      <div id="focusOverlay" class="overlay" hidden>
-        <div
-          class="overlayCard"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="focusTitle"
-        >
-          <h1 id="focusTitle">Ok, we’ve got this.</h1>
-
-          <h3 class="hint">Your One Thing is:</h3>
-          <h4 id="focusOverlayTask" class="focusTaskText">…</h4>
-
-          <label for="focusNotes" class="hint">Notes (optional)</label>
-          <textarea
-            id="focusNotes"
-            rows="4"
-            placeholder="Anything that will make this easier? A tiny first step?"
-          ></textarea>
-
+        <div class="card">
+          <h2>What do you need right now?</h2>
           <div class="row">
-            <button type="button" id="focusStartBtn">Start</button>
-            <button type="button" id="focusFiveBtn" class="secondary">
-              I did 5 mins
-            </button>
-            <button type="button" id="focusDoneBtn">Done</button>
+            <button type="button" id="goBrainDumpBtn">Brain dump</button>
+            <button type="button" class="secondary" id="goBreatheBtn">Breathe</button>
+          </div>
+          <p class="hint">No thinking. Just pick one.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Add Task -->
+    <section class="screen" id="screen-brainDump">
+      <div class="screenInner">
+        <section class="card" id="brainDumpCard">
+          <h1>Brain dump</h1>
+          <form id="taskForm" class="row">
+            <input id="taskInput" type="text" placeholder="Add a task… (keep it small)" autocomplete="off" />
+            <button type="submit">Add</button>
+          </form>
+          <p class="hint">No pressure. Just get it out of your head.</p>
+        </section>
+      </div>
+    </section>
+
+    <!-- Vibe check (hidden until a task is added) -->
+    <section class="screen" id="screen-vibe">
+      <div class="screenInner">
+        <section class="card" id="vibeCard">
+          <h2>Quick vibe check</h2>
+          <p class="hint">Give me the vibe, I’ll do the sorting.</p>
+
+          <div class="vibeGroup">
+            <h3>Relief level</h3>
+            <div class="vibeRow" data-field="impact">
+              <button type="button" data-value="big">Big</button>
+              <button type="button" data-value="medium">Medium</button>
+              <button type="button" data-value="small">Small</button>
+            </div>
+          </div>
+
+          <div class="vibeGroup">
+            <h3>Time needed</h3>
+            <div class="vibeRow" data-field="minutes">
+              <button type="button" data-value="5">5m</button>
+              <button type="button" data-value="15">15m</button>
+              <button type="button" data-value="30">30m</button>
+              <button type="button" data-value="60">60m+</button>
+            </div>
+          </div>
+
+          <div class="vibeGroup">
+            <h3>Time-sensitive?</h3>
+            <div class="vibeRow" data-field="pressure">
+              <button type="button" data-value="soon">Soon</button>
+              <button type="button" data-value="later">Later</button>
+              <button type="button" data-value="none">Not really</button>
+            </div>
           </div>
 
           <div class="row">
-            <button type="button" id="focusBreatheBtn" class="secondary">
+            <button type="button" id="vibeSaveBtn">Save vibe</button>
+            <button type="button" class="secondary" id="vibeSkipBtn">Skip</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Tasks list -->
+    <section class="screen" id="screen-list">
+      <div class="screenInner">
+        <section class="card" id="taskListCard">
+          <h2>Your list</h2>
+          <ul id="taskList" class="list"></ul>
+          <p class="hint" id="doneHint" hidden>
+            Tip: click a task to mark it as done.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <!-- Focus task -->
+    <section class="screen" id="screen-oneThing">
+      <div class="screenInner">
+        <section class="card" id="focusCard">
+          <h2>Your One Thing</h2>
+          <p id="focusText" class="focusText">
+            Not picked yet. When you’re ready, we’ll choose one.
+          </p>
+          <div class="row">
+            <button id="pickBtn" type="button">Pick my One Thing</button>
+            <button id="pageBreatheBtn" type="button" class="secondary">
               Breathe
             </button>
-            <button type="button" id="focusCloseBtn" class="secondary">
-              Close
-            </button>
           </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Focus Mode Overlay (hidden until a task is picked) -->
+    <div id="focusOverlay" class="overlay" hidden>
+      <div class="overlayCard" role="dialog" aria-modal="true" aria-labelledby="focusTitle">
+        <h1 id="focusTitle">Ok, we’ve got this.</h1>
+
+        <h3 class="hint">Your One Thing is:</h3>
+        <h4 id="focusOverlayTask" class="focusTaskText">…</h4>
+
+        <label for="focusNotes" class="hint">Notes (optional)</label>
+        <textarea id="focusNotes" rows="4"
+          placeholder="Anything that will make this easier? A tiny first step?"></textarea>
+
+        <div class="row">
+          <button type="button" id="focusStartBtn">Start</button>
+          <button type="button" id="focusFiveBtn" class="secondary">
+            I did 5 mins
+          </button>
+          <button type="button" id="focusDoneBtn">Done</button>
+        </div>
+
+        <div class="row">
+          <button type="button" id="focusBreatheBtn" class="secondary">
+            Breathe
+          </button>
+          <button type="button" id="focusCloseBtn" class="secondary">
+            Close
+          </button>
         </div>
       </div>
-      <!-- Breathe Overlay (separate from Focus Mode) -->
-      <div id="breatheOverlay" class="overlay" hidden>
-        <div
-          class="overlayCard"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="breatheTitle"
-        >
-          <h1 id="breatheTitle">Ok, breathe with me.</h1>
-          <p class="hint">In for 4… hold for 4… out for 6… hold</p>
+    </div>
+    <!-- Breathe Overlay (separate from Focus Mode) -->
+    <div id="breatheOverlay" class="overlay" hidden>
+      <div class="overlayCard" role="dialog" aria-modal="true" aria-labelledby="breatheTitle">
+        <h1 id="breatheTitle">Ok, breathe with me.</h1>
+        <p class="hint">In for 4… hold for 4… out for 6… hold</p>
 
-          <div class="breatheCircle" aria-hidden="true"></div>
+        <div class="breatheCircle" aria-hidden="true"></div>
 
-          <p class="hint" id="breatheStatus">Ready when you are.</p>
+        <p class="hint" id="breatheStatus">Ready when you are.</p>
 
-          <div class="row">
-            <button type="button" id="breatheStartBtn">Start breathing</button>
-            <button type="button" class="secondary" id="breatheCloseBtn">
-              Close
-            </button>
-          </div>
+        <div class="row">
+          <button type="button" id="breatheStartBtn">Start breathing</button>
+          <button type="button" class="secondary" id="breatheCloseBtn">
+            Close
+          </button>
         </div>
       </div>
-      <footer class="footer">
-        <p>
-          Made with intention ✨ by Monica © 2026 One Thing App. All rights
-          reserved.
-        </p>
-      </footer>
-    </main>
-    <script src="./js/app.js"></script>
-  </body>
+    </div>
+    <footer class="footer">
+      <p>
+        Made with intention ✨ by Monica © 2026 One Thing App. All rights
+        reserved.
+      </p>
+    </footer>
+  </main>
+  <script src="./js/app.js"></script>
+</body>
+
 </html>

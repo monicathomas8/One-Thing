@@ -143,11 +143,12 @@ No frameworks, no libraries, just clean, readable front-end code.
 
 ## 📌 Purpose
 
-This project was built as a **one-day app** to practise:
+This project started as a **one-day app** to practise:
 - clean HTML structure
 - responsive CSS
 - thoughtful JavaScript state management
 - mobile-first UX decisions
+It has now become an ongoing project, to help improve my coding skills and update a live project with new features as the requesta come live. 
 
 More importantly, it was designed to be **genuinely useful**, not just a technical exercise.
 

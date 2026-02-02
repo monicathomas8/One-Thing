@@ -49,16 +49,36 @@ h1 {
 }
 
 /* =========================
-   MOBILE NAV (hidden by default)
+   MOBILE NAV 
 ========================= */
 .mobileNav {
-  display: none;
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
   margin: 0 auto 10px;
   max-width: 560px;
   padding: 0 16px 10px;
+}
+
+/* =========================
+   SCREENS (ONE AT A TIME)
+========================= */
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 22px 16px;
+}
+
+.screen.isActive {
+  display: block;
+}
+
+/* A calm centered container inside screens */
+.screenInner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
 }
 
 /* =========================
@@ -251,8 +271,7 @@ button.secondary:hover {
 }
 
 #breatheOverlay .overlayCard {
-  background: url("../assets/images/breathe-overlay.jpg") center / cover
-    no-repeat;
+  background: url("../assets/images/breathe-overlay.jpg") center / cover no-repeat;
 }
 
 #focusOverlay .overlayCard::before,
@@ -286,6 +305,27 @@ button.secondary:hover {
   padding: 32px 20px;
 }
 
+/* FULL-PAGE BREATHE overlay (all screens) */
+#breatheOverlay {
+  place-items: stretch;
+  padding: 0;
+  text-align: center;
+}
+
+#breatheOverlay .overlayCard {
+  max-width: none;
+  border-radius: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 22px 16px;
+}
+
+#breatheOverlay h1 {
+  text-align: center;
+  margin-bottom: 12px;
+}
 
 /* =========================
    BREATHE CIRCLE
@@ -327,29 +367,6 @@ button.secondary:hover {
     animation: none;
   }
 }
-
-/* Centre the Breathe overlay title */
-#breatheOverlay {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-#breatheOverlay {
-    place-items: stretch;
-    padding: 0;
-    text-align: center;
-    font-size: bigger;
-  }
-
-  #breatheOverlay .overlayCard {
-    max-width: none;
-    border-radius: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 22px 16px;
-  }
 
 /* =========================
    TEXT
@@ -400,38 +417,33 @@ textarea {
 
 /* Phones */
 @media (max-width: 520px) {
-  main.container .card.isActive {
-  display: block;
-  transform: scale(1.02);
+  /* Show mobile nav only on phones */
+  .mobileNav {
+    display: flex;
   }
+
   .header {
     padding: 20px 14px 6px;
   }
+
   h1 {
     font-size: 24px;
   }
+
   .subtext {
     font-size: 14px;
   }
+
   .container {
     padding: 12px;
     gap: 12px;
   }
-  /* Show mobile nav */
-  .mobileNav {
-    display: flex;
-  }
-  /* ONE PANEL AT A TIME */
-  main.container .card {
-    display: none;
-  }
-  main.container .card.isActive {
-    display: block;
-  }
+
   .card {
     max-width: 100%;
     padding: 18px;
   }
+
   .row {
     flex-direction: column;
     align-items: stretch;
