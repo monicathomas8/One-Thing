@@ -12,9 +12,31 @@ Instead of long to-do lists and pressure to do everything, this app encourages y
 
 ---
 
-## 🚀 Live Site
+## 🚀 Live App
 
-👉 **[View the live app](https://monicathomas8.github.io/One-Thing/)**
+👉 https://just-onething.netlify.app/
+
+One Thing is built as a **Progressive Web App (PWA)**, meaning it can be installed on desktop and mobile and used like a native app.
+
+---
+## 📲 Install as an App
+
+### Desktop (Chrome / Edge)
+- Open the app in your browser
+- Click the **Install** icon in the address bar
+- Confirm to install
+
+### iOS (iPhone / iPad)
+- Open the app in **Safari**
+- Tap the **Share** icon
+- Select **Add to Home Screen**
+
+### Android
+- Open the app in **Chrome**
+- Tap the **menu (⋮)**
+- Select **Install app** or **Add to Home screen**
+
+Once installed, the app opens full-screen and works offline after the first load.
 
 ---
 
@@ -100,15 +122,14 @@ This avoids the app feeling rigid or judgmental while still offering helpful gui
 
 ---
 
-## 🛠️ Built With
+## 🛠 Technologies Used
 
-- HTML5  
-- CSS3  
+- HTML  
+- CSS  
 - JavaScript  
-- LocalStorage  
-- GitHub Pages (deployment)
-
-No frameworks, no libraries, just clean, readable front-end code.
+- Progressive Web App (PWA)
+- Service Worker (offline support)
+- Netlify (hosting & deployment).
 
 ---
 
