@@ -162,7 +162,7 @@ h1 {
    CARDS (GLASS EFFECT)
 ========================= */
 .card {
-  background: rgba(20, 24, 36, 0.6);
+  background: rgba(20, 24, 36, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
   padding: 20px;
@@ -319,6 +319,8 @@ button.secondary:hover {
   display: flex;
   gap: 8px;
   margin-top: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .vibeRow button {
@@ -337,6 +339,14 @@ button.secondary:hover {
 .vibeRow button.selected {
   background-color: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.6);
+}
+
+.vibeGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 /* =========================
@@ -399,6 +409,16 @@ button.secondary:hover {
 
 .overlayCard .row {
   justify-content: center;
+}
+
+#menuOverlay {
+  background: rgba(10, 12, 18, 0.95);
+}
+
+#menuOverlay .overlayCard {
+  background: none;
+  box-shadow: none;
+  border: none;
 }
 
 #focusOverlay .overlayCard {
@@ -652,8 +672,8 @@ button,
 @media (max-width: 520px) {
   button,
   .btn {
-    width: 100%;
-    max-width: 320px;
+    width: auto;
+    max-width: auto;
     margin: 0 auto;
   }
 }
