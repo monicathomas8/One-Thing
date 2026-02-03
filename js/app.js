@@ -65,6 +65,14 @@ const menuBreatheBtn = document.getElementById("menuBreatheBtn");
 const goBrainDumpBtn = document.getElementById("goBrainDumpBtn");
 const goBreatheBtn = document.getElementById("goBreatheBtn");
 
+const listAddAnotherBtn = document.getElementById("listAddAnotherBtn");
+const listPickOneThingBtn = document.getElementById("listPickOneThingBtn");
+
+if (listPickOneThingBtn) {
+  listPickOneThingBtn.addEventListener("click", handlePickOneThing);
+}
+
+
 // ======================= SCREENS (ONE AT A TIME) =======================
 const screens = document.querySelectorAll(".screen");
 
@@ -475,6 +483,12 @@ if (vibeSkipBtn) {
 
 // One Thing
 if (pickBtn) pickBtn.addEventListener("click", handlePickOneThing);
+
+if (listAddAnotherBtn) {
+  listAddAnotherBtn.addEventListener("click", () => {
+    showScreen("screen-brainDump");
+  });
+}
 
 // Focus overlay buttons
 if (focusCloseBtn) focusCloseBtn.addEventListener("click", closeFocusOverlay);
