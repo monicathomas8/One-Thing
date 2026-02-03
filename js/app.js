@@ -72,6 +72,12 @@ if (listPickOneThingBtn) {
   listPickOneThingBtn.addEventListener("click", handlePickOneThing);
 }
 
+const listBreatheBtn = document.getElementById("listBreatheBtn");
+
+if (listBreatheBtn) {
+  listBreatheBtn.addEventListener("click", openBreatheOverlay);
+}
+
 
 // ======================= SCREENS (ONE AT A TIME) =======================
 const screens = document.querySelectorAll(".screen");
