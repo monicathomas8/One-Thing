@@ -122,6 +122,12 @@ function setDailyAffirmation() {
 }
 
 function renderTasks() {
+  const emptyMsg = document.getElementById("emptyListMessage");
+
+  if (emptyMsg) {
+    emptyMsg.style.display = tasks.length === 0 ? "block" : "none";
+  }
+
   if (!taskList) return;
 
   if (doneHint) doneHint.hidden = tasks.length === 0;
