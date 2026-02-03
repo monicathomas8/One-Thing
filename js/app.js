@@ -82,12 +82,26 @@ if (listBreatheBtn) {
 // ======================= SCREENS (ONE AT A TIME) =======================
 const screens = document.querySelectorAll(".screen");
 
-function showScreen(id) {
+function showScreen(target) {
+  // target can be "screen-question" OR a DOM element
+  const id = typeof target === "string" ? target : target?.id;
+  if (!id) return;
+
   screens.forEach((s) => s.classList.remove("isActive"));
-  const next = document.getElementById(id);
-  if (next) next.classList.add("isActive");
+  document.getElementById(id)?.classList.add("isActive");
+
+  const mobileNav = document.querySelector(".mobileNav");
+  const showMenuOn = ["screen-question", "screen-brainDump", "screen-list", "screen-oneThing"];
+
+  if (mobileNav) {
+    mobileNav.classList.toggle("isVisible", showMenuOn.includes(id));
+  }
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+
+
 
 // ======================= 3) STATE (APP DATA) =======================
 let tasks = [];
@@ -559,30 +573,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const introScreen = document.getElementById("screen-intro");
   const todayScreen = document.getElementById("screen-today");
   const questionScreen = document.getElementById("screen-question");
-
   const backToTodayBtn = document.getElementById("backToTodayBtn");
   const todayContinueBtn = document.getElementById("todayContinueBtn");
   const todayReadyText = document.getElementById("todayReadyText");
 
-  function showScreen(screen) {
-    document.querySelectorAll(".screen").forEach((s) => {
-      s.classList.remove("isActive");
-    });
-    screen.classList.add("isActive");
-  }
-
   function prepTodayScreen() {
     // Hide + reset “ready” text
     if (todayReadyText) todayReadyText.classList.remove("isVisible");
-
     // Hide Continue button until we reveal it
     if (todayContinueBtn) todayContinueBtn.classList.remove("isVisible");
-
     // Show Continue button first
     setTimeout(() => {
       if (todayContinueBtn) todayContinueBtn.classList.add("isVisible");
     }, 3000);
-
     // Then, a little later, show “Ready when you are.”
     setTimeout(() => {
       if (todayReadyText) todayReadyText.classList.add("isVisible");

@@ -53,26 +53,49 @@ h1 {
 ========================= */
 /* NAV: one calm menu button */
 .mobileNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   display: flex;
   justify-content: flex-end;
   padding: 12px 16px;
-  max-width: 720px;
-  margin: 0 auto;
+  background: transparent;
   gap: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease 0.2s;
+}
+
+.mobileNav.isVisible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Hide all nav buttons except the menu toggle */
 .mobileNav button {
-  display: none;
+  display: inline-flex;
 }
 
 /* Show only the "menu" button */
 .mobileNav #menuBtn {
-  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
-  border-radius: 999px;
+}
+
+/* Only hide non-menu buttons */
+.mobileNav button:not(#menuBtn) {
+  display: none;
+}
+
+/* Always show menu button */
+#menuBtn {
+  display: inline-flex;
+  background: transparent;
+  border: 0;
+  padding: 6px 8px;
+  box-shadow: none;
 }
 
 /* Continue button fade (single source of truth) */
@@ -106,19 +129,33 @@ h1 {
   display: none;
   min-height: 100vh;
   padding: 22px 16px;
+  position: relative;
 }
 
+.screen .mobileNav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  justify-content: flex-end;
+  z-index: 10;
+}
 
 .screen.isActive {
-  display: block;
+  display: flex;
+  justify-content: center;
+  padding: 22px 16px;
 }
 
 /* A calm centered container inside screens */
 .screenInner {
+  width: 100%;
   max-width: 640px;
   margin: 0 auto;
   display: grid;
   gap: 14px;
+  justify-items: center;
+  padding-top: 64px;
 }
 
 /* =========================
@@ -129,7 +166,7 @@ h1 {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
   padding: 20px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(6px);
   max-width: 600px;
   margin: 0 auto;
   /* NEW: depth */
@@ -163,6 +200,8 @@ h1 {
   display: flex;
   gap: 10px;
   margin-top: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 input,
@@ -198,6 +237,8 @@ button {
   transition:
     background-color 0.15s ease,
     transform 0.05s ease;
+  width: auto;
+  min-width: 180px;
 }
 
 button:hover {
@@ -215,6 +256,13 @@ button.secondary {
 
 button.secondary:hover {
   background-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-row {
+  display: grid;
+  gap: 12px;          /* ← this is the spacing between buttons */
+  margin-top: 16px;  /* ← space between card and buttons */
+  justify-items: center;
 }
 
 /* Continue button fade (single source of truth) */
@@ -252,7 +300,6 @@ button.secondary:hover {
     transform: translateY(0);
   }
 }
-
 
 #screen-brainDump .brainDumpBackBtn {
   opacity: 0;
@@ -486,6 +533,19 @@ textarea {
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* Improve readability on glass */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card,
+.header,
+.overlayCard {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -506,13 +566,7 @@ textarea {
 /* Phones */
 @media (max-width: 520px) {
   /* Show mobile nav only on phones */
-  .mobileNav {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-  
-  }
-
+ 
   .header {
     padding: 20px 14px 6px;
   }
@@ -536,13 +590,14 @@ textarea {
   }
 
   .row {
-    flex-direction: column;
-    align-items: stretch;
+    gap: 10px;
+    margin-top: 12px;
   }
 
   button {
     width: 100%;
-    padding: 13px 14px;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   textarea {
@@ -555,3 +610,51 @@ textarea {
     gap: 8px !important;
   }
 }
+
+/* =========================
+   FIX: card + button sizing
+   (paste at end of file)
+========================= */
+
+/* Stop flex stretching making things feel huge */
+.screen.isActive {
+  align-items: center; /* important */
+}
+
+/* Keep the content area a normal readable width */
+.screenInner {
+  width: 100%;
+  max-width: 640px;
+  padding-top: 64px;
+}
+
+/* Cards should never feel massive */
+.card {
+  width: 100%;
+  max-width: 600px;   /* your original intent */
+}
+
+/* Buttons: stop the big square look */
+button,
+.btn {
+  width: auto;
+  min-width: 0;       /* cancels any earlier min-width */
+  padding: 10px 14px; /* smaller */
+  border-radius: 12px;
+}
+
+/* Center buttons under cards */
+.row {
+  justify-content: center;
+}
+
+/* Mobile: stacked, but not edge-to-edge */
+@media (max-width: 520px) {
+  button,
+  .btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+

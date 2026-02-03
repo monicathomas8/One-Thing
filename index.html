@@ -12,6 +12,11 @@
 </head>
 
 <body>
+  <!--NavBar-->
+   <nav class="mobileNav" aria-label="App navigation">
+    <button type="button" class="secondary" id="menuBtn">☰ Menu</button>
+  </nav>
+
   <!-- SCREEN 1: Intro overlay -->
   <section class="screen isActive" id="screen-intro">
     <div class="screenInner">
@@ -24,11 +29,6 @@
     </div>
   </section>
 
-  <!-- Navigation stays global -->
-  <nav class="mobileNav" aria-label="App navigation">
-    <button type="button" class="secondary" id="menuBtn">☰ Menu</button>
-  </nav>
-
   <main class="container">
     <!-- SCREEN 2: Today's Focus -->
     <section class="screen" id="screen-today">
@@ -37,12 +37,13 @@
           <h2>Today’s focus</h2>
           <p id="affirmationText">Loading your daily affirmation…</p>
         </div>
-        <button type="button" id="todayContinueBtn">
+        <button type="button" class="secondary" id="todayContinueBtn">
           Continue
         </button>
         <p id="todayReadyText" class="hint">Ready when you are.</p>
       </div>
     </section>
+
     <!-- SCREEN 3: What do you need right now -->
     <section class="screen" id="screen-question">
         <div class="screenInner">
@@ -51,7 +52,7 @@
 
             <div class="row">
               <button type="button" id="goBrainDumpBtn">Brain dump</button>
-              <button type="button" class="secondary" id="goBreatheBtn">Breathe</button>
+              <button type="button" id="goBreatheBtn">Breathe</button>
             </div>
 
             <p class="hint">No thinking. Just pick one.</p>
@@ -62,7 +63,6 @@
         </div>
       </section>
 
-    
       <!-- Add Task -->
       <section class="screen" id="screen-brainDump">
         <div class="screenInner">
@@ -132,11 +132,11 @@
               Tip: click a task to mark it as done.
             </p>
           </section>
-        </div>
-        <div class="btn-row">
-          <button class="btn" id="listAddAnotherBtn" type="button">Add another task</button>
-          <button class="btn" id="listPickOneThingBtn" type="button">Pick my one thing</button>
-          <button class="btn" id="listBreatheBtn">Breathe</button>
+            <div class="btn-row">
+              <button class="btn" id="listAddAnotherBtn" type="button">Add another task</button>
+              <button class="btn" id="listPickOneThingBtn" type="button">Pick my one thing</button>
+              <button class="btn" id="listBreatheBtn">Breathe</button>
+            </div>
         </div>
       </section>
 
@@ -212,7 +212,7 @@
             <button data-screen="screen-oneThing">Your One Thing</button>
           </div>
           <div class="row">
-            <button id="menuBreatheBtn" class="secondary">Breathe</button>
+            <button id="menuBreatheBtn">Breathe</button>
             <button id="menuCloseBtn" class="secondary">Close</button>
           </div>
         </div>
