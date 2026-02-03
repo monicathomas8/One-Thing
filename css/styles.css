@@ -558,12 +558,19 @@ textarea {
 }
 
 .footer {
-  margin-top: auto;
-  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 0.75rem;
   text-align: center;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+
+  pointer-events: none; /* important */
 }
+
 
 /* Improve readability on glass */
 body {
