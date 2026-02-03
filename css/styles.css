@@ -411,6 +411,18 @@ button.secondary:hover {
   justify-content: center;
 }
 
+#focusNotes {
+  width: 100%;
+  max-width: 520px;
+  min-height: 140px;
+
+  margin: 12px auto 20px;
+  display: block;
+
+  padding: 14px;
+  line-height: 1.5;
+}
+
 #menuOverlay {
   background: rgba(10, 12, 18, 0.95);
 }
