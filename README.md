@@ -14,7 +14,7 @@ Instead of long to-do lists and pressure to do everything, this app encourages y
 
 ## 🚀 Live App
 
-👉 https://just-onething.netlify.app/
+👉 [One Thing](https://onethingapp.uk/)
 
 One Thing is built as a **Progressive Web App (PWA)**, meaning it can be installed on desktop and mobile and used like a native app.
 
