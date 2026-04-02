@@ -175,6 +175,30 @@ More importantly, it was designed to be **genuinely useful**, not just a technic
 
 ---
 
+## Contributing
+
+Thanks for your interest in contributing to One Thing! 🎉
+
+To keep the app stable and running smoothly, please follow 
+these simple steps:
+
+1. All contributions should be made to the **develop** branch — 
+never directly to **main**
+2. Fork the repo and create your changes in a new branch 
+based off **develop**
+3. Submit a pull request to **develop** when you're ready
+4. Wait for review and approval before anything is merged
+5. Once tested and approved, changes will be carefully 
+merged into **main** by the repo owner
+
+**main** is the live, protected version of the app and is 
+only updated when changes have been reviewed and approved. 
+
+Please be patient with reviews - this is a personal project 
+built with care! 💙
+
+---
+
 ## ✨ Author
 
 Built with intention by **Monica Thomas**  
