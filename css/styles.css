@@ -248,6 +248,13 @@ button:active {
   transform: scale(0.97);
 }
 
+/* Slightly stronger press feedback for focus + breathing actions */
+#breatheStartBtn:active,
+#focusStartBtn:active,
+#focusFiveBtn:active {
+  transform: scale(0.94);
+}
+
 button.secondary {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.25);
