@@ -250,19 +250,18 @@ button:active {
 
 /* Slightly stronger visual feedback for focus & breathing actions */
 #breatheStartBtn:active, 
-#focusStartBtn:active, 
-#focusFiveBtn:active {
+#focusStartBtn:active{
   /* Shrink it enough to be seen even while the card grows */
-  transform: scale(0.92) !important; 
+  transform: scale(0.85) !important;
   
   /* A shade darker than hover */
-  background-color: #cbd5e1 !important; 
+  background-color: #dce4f0 !important; 
 
   /* Adds a little depth so it looks 'pushed into' the glass card */
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.15) !important;
   
   /* Fast transition for a snappy feel */
-  transition: transform 0.05s ease-out;
+  transition: transform 0.05s ease-out !important;
 }
 
 button.secondary {
