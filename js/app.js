@@ -339,12 +339,26 @@ function handlePickOneThing() {
   const chosenIndex = pickOneThingIndex();
 
   if (chosenIndex === null) {
-    currentFocusIndex = null;
+  currentFocusIndex = null;
+
+  showScreen("screen-oneThing");
+
+  if (tasks.length === 0) {
     if (focusTextEl) {
-      focusTextEl.textContent = "Nothing left to pick. Ok… that’s a win. 💛";
+      focusTextEl.textContent =
+        "Nothing to pick yet. Add a task whenever you're ready. 💛";
     }
-    return;
+  } 
+  else {
+    if (focusTextEl) {
+      focusTextEl.textContent =
+        "Nothing left to pick. That’s a win. 💛";
+    }
   }
+
+  return;
+}
+
 
   const chosenTask = tasks[chosenIndex];
   if (focusTextEl) {
